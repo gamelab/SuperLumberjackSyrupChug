@@ -10,10 +10,16 @@ SuperLumberjackSyrupChug.Intro = new Kiwi.State('Intro');
 *
 */
 
+SuperLumberjackSyrupChug.Intro.init = function() {
+	this.game.audioMan = new SuperLumberjackSyrupChug.Audio( this.game );
+}
+
 
 SuperLumberjackSyrupChug.Intro.create = function () {
 
 	this.game.stage.color = '000000';
+
+	this.game.audioMan.playTitleTrack();
 
 
 	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 10, 20);
@@ -30,7 +36,12 @@ SuperLumberjackSyrupChug.Intro.create = function () {
 
 	this.sound = new Kiwi.GameObjects.Sprite(this, this.textures.sound, 0, this.play.y);
 	this.sound.x = this.title.x + this.title.width - this.sound.width;
+	this.sound.input.onUp.add(this.toggleSound, this);
 	this.addChild(this.sound);
+
+	if(this.game.audio.mute) {
+		this.sound.cellIndex = 1;
+	}
 
 	this.play.input.onUp.add(this.selectCharacter, this);
 
@@ -38,7 +49,21 @@ SuperLumberjackSyrupChug.Intro.create = function () {
 
 
 SuperLumberjackSyrupChug.Intro.selectCharacter = function() {
-
+	this.game.audioMan.playButton();
 	this.game.states.switchState('Select');
+}
+
+
+SuperLumberjackSyrupChug.Intro.toggleSound = function() {
+
+	this.game.audioMan.playButton();
+
+	if(this.game.audio.mute) {
+		this.game.audio.mute = false;
+		this.sound.cellIndex = 0;
+	} else {
+		this.game.audio.mute = true;
+		this.sound.cellIndex = 1;
+	}
 
 }

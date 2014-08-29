@@ -86,6 +86,8 @@ SuperLumberjackSyrupChug.Select.createLumberjack = function(texture, x, y, id) {
 
 SuperLumberjackSyrupChug.Select.selectCharacter = function(jack) {
 
+	this.game.audioMan.playButton();
+
 	if(this.selectedLumberjack !== null) {
 		this.selectedLumberjack.animation.play('inactive');
 	}
@@ -100,6 +102,7 @@ SuperLumberjackSyrupChug.Select.selectCharacter = function(jack) {
 SuperLumberjackSyrupChug.Select.proceed = function() {
 
 	if(this.selectedLumberjack !== null) {
+		this.game.audioMan.playButton();
 		this.game.states.switchState('Play', null, { choosen: this.selectedLumberjack.id })
 	}
 

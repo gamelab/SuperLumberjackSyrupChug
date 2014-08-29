@@ -25,7 +25,7 @@ var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Intro', 'assets/img/loading/');
 
 SuperLumberjackSyrupChug.Loading.preload = function () {
-    
+
     //Make sure to call the super at the top.
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
     KiwiLoadingScreen.prototype.preload.call(this);
@@ -53,5 +53,16 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addSpriteSheet('play', 'assets/img/play.png', 561, 616 / 4);
     this.addImage('leaderboard', 'assets/img/leaderboard.png');
     this.addSpriteSheet('sound', 'assets/img/sound.png', 340 / 2, 154);
+
+
+    //Sounds
+    this.addAudio('button', 'assets/sounds/ButtonPush_Effect.mp3');
+    this.addAudio('countdown', 'assets/sounds/Countdown_Gamescreen.mp3');
+    this.addAudio('gamescreen-loop', 'assets/sounds/GameplayLoop_Gamescreen.mp3');
+    this.addAudio('gulping', 'assets/sounds/GulpingSound_Effect.mp3');
+    this.addAudio('title-loop', 'assets/sounds/Loop_TitleScreen.mp3');
+    this.addAudio('loser', 'assets/sounds/Loser_Effect.mp3');
+    this.addAudio('outOfBreath', 'assets/sounds/OutofBreath_Effect.mp3');
+    this.addAudio('winner', 'assets/sounds/Winner_Effect.mp3');
 
 };
