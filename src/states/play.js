@@ -16,7 +16,7 @@ SuperLumberjackSyrupChug.Play = new Kiwi.State('Play');
 SuperLumberjackSyrupChug.Play.create = function () {
   // Create input methods
   var self = this;
-	this.game.input.onUp.add( function(){ self.player1.chug; } );
+	this.game.input.onUp.add( this.tap, this );
 
   // Create background
   
@@ -39,5 +39,20 @@ SuperLumberjackSyrupChug.Play.update = function() {
 
   // Perform chugodynamics
   this.player1.run();
-  this.player2.run();
+  //this.player2.run();
+
+  // Diagnose stomach
+  /*
+  if(this.game.frame % 10 == 0) {
+    console.log("PLAYER DIGESTION");
+    console.log("  Mouth:", this.player1.mouth);
+    console.log("  Stomach:", this.player1.stomach);
+    console.log("  Lungs:", this.player1.lungOxygen);
+    console.log("  Choking:", this.player1.choking);
+  }
+  */
+}
+
+SuperLumberjackSyrupChug.Play.tap = function() {
+  this.player1.chug();  
 }
