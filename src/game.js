@@ -10,9 +10,8 @@
 //Initialise the Kiwi Game. 
 
 var gameOptions = {
-	renderer: Kiwi.RENDERER_WEBGL, 
-	width: 800,
-	height: 600
+	width: 1165,
+	height: 948
 }
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrubChug', null, gameOptions);

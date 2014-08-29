@@ -33,7 +33,25 @@ SuperLumberjackSyrubChug.Loading.preload = function () {
     /**
     * Replace with your own in-assets to load.
     **/
-    this.addImage('kiwiName', 'assets/img/kiwijs-name.png');
-    this.addSpriteSheet('icons', 'assets/img/kiwijs-icons.png', 100, 90);
+    this.addSpriteSheet('title', 'assets/img/title.png', 3435 / 3, 1384 / 2);
+    this.addSpriteSheet('select', 'assets/img/select.png', 1341, 496 / 8);
+    this.addSpriteSheet('continue', 'assets/img/continue.png', 535, 248 / 4);
+
+
+    //Characters
+    this.addSpriteSheet('paul', 'assets/img/paul-sprite.png', 1324 / 4, 768 / 2);
+    this.addSpriteSheet('gustave', 'assets/img/gustave.png', 1986 / 6, 768 / 2);
+    this.addSpriteSheet('bjorn', 'assets/img/bjorn.png', 1986 / 6, 768 / 2);
+    this.addSpriteSheet('fred', 'assets/img/fred.png', 1986 / 6, 768 / 2);
+    this.addSpriteSheet('big-jim', 'assets/img/big-jim.png', 1324 / 4, 768 / 2);
+    this.addSpriteSheet('luther', 'assets/img/luther.png', 1986 / 6, 768 / 2);
+    this.addSpriteSheet('pierre', 'assets/img/pierre.png', 1324 / 4, 768 / 2);
+    this.addSpriteSheet('magnus', 'assets/img/magnus.png', 1324 / 4, 768 / 2);
+
+
+    //Buttons
+    this.addSpriteSheet('play', 'assets/img/play.png', 561, 616 / 4);
+    this.addImage('leaderboard', 'assets/img/leaderboard.png');
+    this.addSpriteSheet('sound', 'assets/img/sound.png', 340 / 2, 154);
 
 };
