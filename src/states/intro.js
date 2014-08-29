@@ -1,6 +1,6 @@
-var SuperLumberjackSyrubChug = SuperLumberjackSyrubChug || {};
+var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
-SuperLumberjackSyrubChug.Intro = new Kiwi.State('Intro');
+SuperLumberjackSyrupChug.Intro = new Kiwi.State('Intro');
 
 /**
 * The IntroState is the state which would manage any main-menu functionality for your game.
@@ -11,6 +11,6 @@ SuperLumberjackSyrubChug.Intro = new Kiwi.State('Intro');
 */
 
 
-SuperLumberjackSyrubChug.Intro.create = function () {
+SuperLumberjackSyrupChug.Intro.create = function () {
     game.states.switchState("Play");
 }

@@ -20,11 +20,11 @@
 * 4 - subfolder {String} The folder that the loading graphics are located at. 
 */
 
-var SuperLumberjackSyrubChug = SuperLumberjackSyrubChug || {};
+var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
-SuperLumberjackSyrubChug.Loading = new KiwiLoadingScreen('Loading', 'Intro', 'assets/img/loading/');
+SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Intro', 'assets/img/loading/');
 
-SuperLumberjackSyrubChug.Loading.preload = function () {
+SuperLumberjackSyrupChug.Loading.preload = function () {
     
     //Make sure to call the super at the top.
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
