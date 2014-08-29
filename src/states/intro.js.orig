@@ -11,7 +11,8 @@ SuperLumberjackSyrupChug.Intro = new Kiwi.State('Intro');
 */
 
 
-SuperLumberjackSyrupChug.Intro.create = function () {
+<<<<<<< HEAD
+SuperLumberjackSyrubChug.Intro.create = function () {
 
 	this.game.stage.color = '000000';
 
@@ -40,4 +41,8 @@ SuperLumberjackSyrupChug.Intro.selectCharacter = function() {
 
 	this.game.states.switchState('Select');
 
+=======
+SuperLumberjackSyrupChug.Intro.create = function () {
+    game.states.switchState("Play");
+>>>>>>> d6831990aaf8c8407802a6598fa20ebcaffc420a
 }
