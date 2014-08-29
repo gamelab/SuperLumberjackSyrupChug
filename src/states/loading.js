@@ -39,14 +39,14 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
 
 
     //Characters
-    this.addSpriteSheet('paul', 'assets/img/paul-sprite.png', 1324 / 4, 768 / 2);
-    this.addSpriteSheet('gustave', 'assets/img/gustave.png', 1986 / 6, 768 / 2);
-    this.addSpriteSheet('bjorn', 'assets/img/bjorn.png', 1986 / 6, 768 / 2);
-    this.addSpriteSheet('fred', 'assets/img/fred.png', 1986 / 6, 768 / 2);
-    this.addSpriteSheet('big-jim', 'assets/img/big-jim.png', 1324 / 4, 768 / 2);
-    this.addSpriteSheet('luther', 'assets/img/luther.png', 1986 / 6, 768 / 2);
-    this.addSpriteSheet('pierre', 'assets/img/pierre.png', 1324 / 4, 768 / 2);
-    this.addSpriteSheet('magnus', 'assets/img/magnus.png', 1324 / 4, 768 / 2);
+    this.addSpriteSheet('paul', 'assets/img/paul-sprite.png', 1324 / 4, 786 / 2);
+    this.addSpriteSheet('gustave', 'assets/img/gustave.png', 1986 / 6, 786 / 2);
+    this.addSpriteSheet('bjorn', 'assets/img/bjorn.png', 1986 / 6, 786 / 2);
+    this.addSpriteSheet('fred', 'assets/img/fred.png', 1986 / 6, 786 / 2);
+    this.addSpriteSheet('big-jim', 'assets/img/big-jim.png', 1324 / 4, 786 / 2);
+    this.addSpriteSheet('luther', 'assets/img/luther.png', 1986 / 6, 786 / 2);
+    this.addSpriteSheet('pierre', 'assets/img/pierre.png', 1324 / 4, 786 / 2);
+    this.addSpriteSheet('magnus', 'assets/img/magnus.png', 1324 / 4, 786 / 2);
 
 
     //Buttons

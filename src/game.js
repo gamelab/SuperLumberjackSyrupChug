@@ -10,7 +10,7 @@
 //Initialise the Kiwi Game. 
 
 var gameOptions = {
-	width: 1165,
+	width: 1374,
 	height: 948
 }
 
@@ -19,6 +19,7 @@ var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOption
 //Add all the States we are going to use.
 game.states.addState(SuperLumberjackSyrupChug.Loading);
 game.states.addState(SuperLumberjackSyrupChug.Intro);
+game.states.addState(SuperLumberjackSyrupChug.Select);
 game.states.addState(SuperLumberjackSyrupChug.Play);
 
 game.states.switchState("Loading");
