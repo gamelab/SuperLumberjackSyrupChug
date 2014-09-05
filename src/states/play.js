@@ -2,6 +2,7 @@ var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
 SuperLumberjackSyrupChug.Play = new Kiwi.State('Play');
 
+
 /**
 * The PlayState in the core state that is used in the game. 
 *
@@ -14,11 +15,15 @@ SuperLumberjackSyrupChug.Play = new Kiwi.State('Play');
 * This create method is executed when a Kiwi state has finished loading any resources that were required to load.
 */
 SuperLumberjackSyrupChug.Play.create = function () {
+
   // Create input methods
   var self = this;
 	this.game.input.onUp.add( this.tap, this );
 
   // Create background
+  this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
+  this.addChild(this.background);
+  this.game.audioMan.playGameTrack();
   
   // Create and connect player 1
   // This is the player sitting at this computer

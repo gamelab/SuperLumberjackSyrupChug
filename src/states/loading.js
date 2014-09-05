@@ -1,24 +1,3 @@
-/**
-* The Loading State is going to be used to load in all of the in-game assets that we need in game.
-*
-* Because in this blueprint there is only a single "hidden object" section we are going to load in all of 
-* the asset's at this point.
-*
-* If you have multiple states however, I would recommend have loading the other graphics as they are required by their states, 
-* Otherwise the loading times maybe a bit long and it is not the most optimal solution.
-*
-*/
-
-/**
-* Since we want to use the custom Kiwi.JS loader with the bobing kiwi/html5 logo and everything. We need to extend the KiwiLoadingScreen State.  
-* The KiwiLoadingScreen State is an extentsion of a normal State but it has some custom code to handle the loading/bobbing/fading of all the items, so if you override a method (like the preload) for example just make sure you call the super method.
-* 
-* The parameters we are passing into this method are as ordered.
-* 1 - name {String} Name of this state.
-* 2 - stateToSwitch {String} Name of the state to switch to AFTER all the assets have loaded. Note: The state you want to switch to should already have been added to the game.
-* 3 - dimensions {Object} A Object containing the width/height that the game is to be. For example {width: 1024, height: 768}
-* 4 - subfolder {String} The folder that the loading graphics are located at. 
-*/
 
 var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
@@ -30,39 +9,67 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
     KiwiLoadingScreen.prototype.preload.call(this);
 
-    /**
-    * Replace with your own in-assets to load.
-    **/
-    this.addSpriteSheet('title', 'assets/img/title.png', 3435 / 3, 1384 / 2);
-    this.addSpriteSheet('select', 'assets/img/select.png', 1341, 496 / 8);
-    this.addSpriteSheet('continue', 'assets/img/continue.png', 535, 248 / 4);
+    //Background
+    this.addImage('background', 'assets/img/trees.png');
+    
+    //Main Menu
+    this.addSpriteSheet('title', 'assets/img/main-menu/title.png', 149, 540 / 6);
+    this.addSpriteSheet('play', 'assets/img/main-menu/play-button.png', 73, 80 / 4);
+    this.addSpriteSheet('play-text', 'assets/img/main-menu/play-button-text.png', 73, 40 / 2);
+
+    //Additional Buttons
+    this.addSpriteSheet('leaderboard', 'assets/img/main-menu/leaderboard.png', 44 / 2, 20);
+    this.addSpriteSheet('sound', 'assets/img/main-menu/sound.png', 44 / 2, 20);
 
 
-    //Characters
-    this.addSpriteSheet('paul', 'assets/img/paul-sprite.png', 1324 / 4, 786 / 2);
-    this.addSpriteSheet('gustave', 'assets/img/gustave.png', 1986 / 6, 786 / 2);
-    this.addSpriteSheet('bjorn', 'assets/img/bjorn.png', 1986 / 6, 786 / 2);
-    this.addSpriteSheet('fred', 'assets/img/fred.png', 1986 / 6, 786 / 2);
-    this.addSpriteSheet('big-jim', 'assets/img/big-jim.png', 1324 / 4, 786 / 2);
-    this.addSpriteSheet('luther', 'assets/img/luther.png', 1986 / 6, 786 / 2);
-    this.addSpriteSheet('pierre', 'assets/img/pierre.png', 1324 / 4, 786 / 2);
-    this.addSpriteSheet('magnus', 'assets/img/magnus.png', 1324 / 4, 786 / 2);
+    //Characters Select
+    this.addSpriteSheet('select-paul', 'assets/img/character-select/paul.png', 172 / 4, 102 / 2);
+    this.addSpriteSheet('select-gustave', 'assets/img/character-select/gustave.png', 258 / 6, 102 / 2);
+    this.addSpriteSheet('select-bjorn', 'assets/img/character-select/bjorn.png', 258 / 6, 102 / 2);
+    this.addSpriteSheet('select-fried', 'assets/img/character-select/friedrich.png', 258 / 6, 102 / 2);
+    this.addSpriteSheet('select-big-jim', 'assets/img/character-select/bigjim.png', 172 / 4, 102 / 2);
+    this.addSpriteSheet('select-luther', 'assets/img/character-select/luther.png', 258 / 6, 102 / 2);
+    this.addSpriteSheet('select-pierre', 'assets/img/character-select/pierre.png', 258 / 6, 102 / 2);
+    this.addSpriteSheet('select-magnus', 'assets/img/character-select/magnus.png', 172 / 4, 102 / 2);
 
 
-    //Buttons
-    this.addSpriteSheet('play', 'assets/img/play.png', 561, 616 / 4);
-    this.addImage('leaderboard', 'assets/img/leaderboard.png');
-    this.addSpriteSheet('sound', 'assets/img/sound.png', 340 / 2, 154);
+    //Select Screen Button
+    this.addSpriteSheet('select', 'assets/img/character-select/select-your-lumberjack.png', 173, 64 / 8);
+    this.addSpriteSheet('continue', 'assets/img/character-select/continue.png', 69, 32 / 4);
 
+
+    //In Game 
+    this.addImage('chug', 'assets/img/in-game/chug.png');
+    this.addImage('ready', 'assets/img/in-game/ready.png');
+    this.addImage('table', 'assets/img/in-game/table.png');
+    this.addImage('tap-to-chug', 'assets/img/in-game/tap-to-chug.png');
+    this.addSpriteSheet('numbers', 'assets/img/in-game/numbers.png', 120 / 10, 13);
+
+
+    //Progress Bar
+    this.addImage('progress-bar-fill', 'assets/img/in-game/progress-bar-fill.png');
+    this.addImage('progress-bar', 'assets/img/in-game/progress-bar.png');
+
+
+    //In Game Characters
+    this.addSpriteSheet('ingame-paul', 'assets/img/in-game/chars/paul.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-gustave', 'assets/img/in-game/chars/gustave.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-bjorn', 'assets/img/in-game/chars/bjorn.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-fried', 'assets/img/in-game/chars/friedrich.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-big-jim', 'assets/img/in-game/chars/bigjim.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-luther', 'assets/img/in-game/chars/luther.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 184 / 2, 321 / 3);
 
     //Sounds
     this.addAudio('button', 'assets/sounds/ButtonPush_Effect.mp3');
     this.addAudio('countdown', 'assets/sounds/Countdown_Gamescreen.mp3');
-    this.addAudio('gamescreen-loop', 'assets/sounds/GameplayLoop_Gamescreen.mp3');
+    this.addAudio('game-loop', 'assets/sounds/GameplayLoop_Gamescreen.mp3');
     this.addAudio('gulping', 'assets/sounds/GulpingSound_Effect.mp3');
     this.addAudio('title-loop', 'assets/sounds/Loop_TitleScreen.mp3');
     this.addAudio('loser', 'assets/sounds/Loser_Effect.mp3');
     this.addAudio('outOfBreath', 'assets/sounds/OutofBreath_Effect.mp3');
     this.addAudio('winner', 'assets/sounds/Winner_Effect.mp3');
+    this.addAudio('select-loop', 'assets/sounds/SelectScreen_Loop.mp3');
 
 };

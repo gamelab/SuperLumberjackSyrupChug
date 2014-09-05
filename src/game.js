@@ -10,8 +10,10 @@
 //Initialise the Kiwi Game. 
 
 var gameOptions = {
-	width: 1374,
-	height: 948
+	width: 222,
+	height: 125,
+	renderer: Kiwi.RENDERER_CANVAS,
+	scaleType: Kiwi.Stage.SCALE_FIT
 }
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOptions);

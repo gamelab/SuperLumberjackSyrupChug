@@ -18,20 +18,42 @@ SuperLumberjackSyrupChug.Intro.init = function() {
 SuperLumberjackSyrupChug.Intro.create = function () {
 
 	this.game.stage.color = '000000';
-
 	this.game.audioMan.playTitleTrack();
 
+	// Turn off antialiasing
+	this.game.stage.ctx.imageSmoothingEnabled = false;
 
-	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 10, 20);
+	this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
+	this.addChild(this.background);
+
+
+	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 5, 5);
 	this.title.x = this.game.stage.width * 0.5 - this.title.width * 0.5;
 	this.title.animation.add('default', [0,1,2,3,4,5], 0.05, true, true);
 	this.addChild(this.title);
 
 
 	this.play = new Kiwi.GameObjects.Sprite(this, this.textures.play, this.title.x, 0);
-	this.play.y = this.game.stage.height - this.play.height - 10;
+	this.play.y = this.game.stage.height - this.play.height - 5;
 	this.play.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.addChild(this.play);
+
+
+	this.playText = new Kiwi.GameObjects.Sprite( this, this.textures['play-text'], this.play.x, this.play.y);
+	this.addChild(this.playText);
+
+	this.playText.input.onEntered.add(function() {
+		this.cellIndex = 1;
+	}, this.playText);
+	this.playText.input.onLeft.add(function() {
+		this.cellIndex = 0;
+	}, this.playText);
+	this.playText.input.onUp.add(function() {
+		this.cellIndex = 0;
+	}, this.playText);
+	this.playText.input.onDown.add(function() {
+		this.cellIndex = 1;
+	}, this.playText);
 
 
 	this.sound = new Kiwi.GameObjects.Sprite(this, this.textures.sound, 0, this.play.y);
