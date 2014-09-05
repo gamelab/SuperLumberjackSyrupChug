@@ -6,11 +6,11 @@ SuperLumberjackSyrupChug.Audio = function(game) {
 	this.currentBackgroundTrack = null;
 
 	//Looping Background Track
-	this.titleTrack = new Kiwi.Sound.Audio(this.game, 'title-loop', 1, true);
-	this.selectTrack = new Kiwi.Sound.Audio(this.game, 'select-loop', 1, true);
-	this.gameTrack = new Kiwi.Sound.Audio(this.game, 'game-loop', 1, true);
+	this.titleTrack = new Kiwi.Sound.Audio(this.game, 'title-loop', 0.8, true);
+	this.selectTrack = new Kiwi.Sound.Audio(this.game, 'select-loop', 0.8, true);
+	this.gameTrack = new Kiwi.Sound.Audio(this.game, 'game-loop', 0.6, true);
 
-	this.button = new Kiwi.Sound.Audio(this.game, 'button', 1, false);
+	this.button = new Kiwi.Sound.Audio(this.game, 'button', 0.8, false);
 
 }
 
@@ -42,5 +42,5 @@ SuperLumberjackSyrupChug.Audio.prototype.playGameTrack = function() {
 }
 
 SuperLumberjackSyrupChug.Audio.prototype.playButton = function() {
-	this.button.play();
+	this.button.play('default', true);
 }

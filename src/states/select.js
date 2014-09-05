@@ -108,7 +108,7 @@ SuperLumberjackSyrupChug.Select.proceed = function() {
 
 	if(this.selectedLumberjack !== null) {
 		this.game.audioMan.playButton();
-		this.game.states.switchState('Play', null, { choosen: this.selectedLumberjack.id })
+		this.game.states.switchState('Play', null, null, { choosen: this.selectedLumberjack.id })
 	}
 
 }

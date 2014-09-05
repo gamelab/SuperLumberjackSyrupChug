@@ -20,8 +20,6 @@ SuperLumberjackSyrupChug.Intro.create = function () {
 	this.game.stage.color = '000000';
 	this.game.audioMan.playTitleTrack();
 
-	// Turn off antialiasing
-	this.game.stage.ctx.imageSmoothingEnabled = false;
 
 	this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
 	this.addChild(this.background);

@@ -1,26 +1,36 @@
 var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
-SuperLumberjackSyrupChug.Player = function(state) {
-	this.state = state;
+SuperLumberjackSyrupChug.Player = function(state, character) {
+
+	Kiwi.Group.call(this, state);
 
 	// Create graphics and add to state
+	this.characterNumber = character;
+	this.character = new SuperLumberjackSyrupChug.PlayerModel( this.state, 1, 15, character);
+	this.addChild( this.character );
+
+	//Sounds
+	this.chockingSound = new  Kiwi.Sound.Audio(this.game, 'outOfBreath', 1, false);
+	this.glupingSound = new  Kiwi.Sound.Audio(this.game, 'gulping', 1, false);
+
+
 	// Nice temp primitive bars
 	var barCanvas = document.createElement("canvas");
 	this.barCanvas = barCanvas;
-    barCanvas.width = 500;
-    barCanvas.height = 50;
+    barCanvas.width = 100;
+    barCanvas.height = 10;
     this.barCanvasContext = barCanvas.getContext("2d");
     this.barAtlas = new Kiwi.Textures.SingleImage("barTexture", barCanvas);
-    state.textureLibrary.add(this.barAtlas);
-    this.bar = new Kiwi.GameObjects.Sprite(state, state.textures.barTexture, 50, 50);
-    state.addChild(this.bar);
+    this.state.textureLibrary.add(this.barAtlas);
+    
+    this.bar = new Kiwi.GameObjects.Sprite(state, state.textures.barTexture, 5, 5);
+    this.addChild(this.bar);
 
 	// Underbar
 	// Stomach
 	// Mouth
 	// Choke
 	// Lungs
-
 
 	// Init esophagus
 	this.stomach = 0;
@@ -39,17 +49,20 @@ SuperLumberjackSyrupChug.Player = function(state) {
 	this.chokeRecovery = 0.5;
 }
 
+Kiwi.extend( SuperLumberjackSyrupChug.Player, Kiwi.Group );
+
 SuperLumberjackSyrupChug.Player.prototype.chug = function() {
 	// Runs per tap
 	if(!this.choking) {
 		this.mouth += this.jugChug;
+		this.character.animation.play('drink', true);
+		this.glupingSound.play();
 	}
 }
 
 
 SuperLumberjackSyrupChug.Player.prototype.run = function() {
 	// Runs per frame
-
 	this.digest();
 
 	this.render();
@@ -88,6 +101,7 @@ SuperLumberjackSyrupChug.Player.prototype.digest = function() {
 		this.chokeLeft -= this.chokeRecovery * rate;
 		if(this.chokeLeft <= 0) {
 			this.choking = false;
+			this.character.animation.play('idle');
 		}
 	}
 
@@ -115,17 +129,21 @@ SuperLumberjackSyrupChug.Player.prototype.render = function() {
 	ctx.fillRect(stomachBarWidth,0, mouthBarWidth,this.barCanvas.height);
 	// Lungs
 	var lungBarWidth = this.barCanvas.width * this.lungOxygen / this.lungCapacity;
-	console.log(lungBarWidth);
+
 	ctx.clearRect(0,this.barCanvas.height * 0.8, lungBarWidth, this.barCanvas.height * 0.2);
 	ctx.fillStyle = "#0080ff";
 	ctx.fillRect(0,this.barCanvas.height * 0.8, lungBarWidth, this.barCanvas.height * 0.2);
+
 	// Choke
 	if(this.choking) {
 		var chokeBarWidth = this.barCanvas.width * this.chokeLeft / this.stomachMax;
-		ctx.fillRect(stomachBarWidth - chokeBarWidth,0, chokeBarWidth, this.barCanvas.height);
+		ctx.fillRect(stomachBarWidth - chokeBarWidth, 0, chokeBarWidth, this.barCanvas.height);
+
+		this.character.animation.play('choke', false);
+		this.chockingSound.play();
 	}
 }
 
 SuperLumberjackSyrupChug.Player.prototype.win = function() {
-	console.log("You win!");
+
 }
