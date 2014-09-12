@@ -2,15 +2,6 @@ var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
 SuperLumberjackSyrupChug.Select = new Kiwi.State('Select');
 
-/**
-* The IntroState is the state which would manage any main-menu functionality for your game.
-* Generally this State would switch to other sub 'states' which would handle the individual features. 
-*  
-* Right now we are just switching straight to the PlayState.
-*
-*/
-
-
 SuperLumberjackSyrupChug.Select.create = function () {
 
 	this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);

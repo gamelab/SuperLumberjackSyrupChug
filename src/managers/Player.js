@@ -12,6 +12,8 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 	//Sounds
 	this.chockingSound = new  Kiwi.Sound.Audio(this.game, 'outOfBreath', 1, false);
 	this.glupingSound = new  Kiwi.Sound.Audio(this.game, 'gulping', 1, false);
+	this.winSound = new Kiwi.Sound.Audio(this.game, 'winner', 1, false);
+	this.loseSound = new Kiwi.Sound.Audio(this.game, 'loser', 1, false);
 
 
 	// Nice temp primitive bars
@@ -47,6 +49,15 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 	this.choking = false;
 	this.chokeLeft = 0;
 	this.chokeRecovery = 0.5;
+
+	// AI parameters
+	this.isEnemy = false;
+	this.aiChugRate = 0.05;
+	this.aiVariation = 0.03;
+	this.aiVariationFreq = 0.01;
+	this.aiVariationPhase = 0.0;
+	this.aiChugProgress = 0.0;
+	this.aiChugIndex = 0.0;
 }
 
 Kiwi.extend( SuperLumberjackSyrupChug.Player, Kiwi.Group );
@@ -145,5 +156,26 @@ SuperLumberjackSyrupChug.Player.prototype.render = function() {
 }
 
 SuperLumberjackSyrupChug.Player.prototype.win = function() {
+	// Fanfare
+	if(this.isEnemy) {
+		this.loseSound.play();
+	}
+	else {
+		this.winSound.play();
+	}
 
+	var victoryConfig = {};
+	victoryConfig.enemyWon = this.isEnemy;
+	victoryConfig.winner = this.characterNumber;
+	victoryConfig.player1 = this.state.player1.characterNumber;
+	this.state.game.states.switchState("GameOver", SuperLumberjackSyrupChug.GameOver, null, victoryConfig );
+}
+
+SuperLumberjackSyrupChug.Player.prototype.runAI = function() {
+	this.aiChugIndex += this.state.game.time.rate;
+	this.aiChugProgress += this.aiChugRate + Math.sin(this.aiChugIndex * this.aiVariationFreq + this.aiVariationPhase) * this.aiVariation;
+	if( 1 <= this.aiChugProgress) {
+		this.aiChugProgress -= 1.0;
+		this.chug();
+	}
 }

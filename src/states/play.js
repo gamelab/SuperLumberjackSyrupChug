@@ -33,6 +33,9 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
   
   // Create and connect player 1
   // This is the player sitting at this computer
+  if(typeof chosenPlayer !== "number") {
+    chosenPlayer = 1;
+  }
   this.player1 = new SuperLumberjackSyrupChug.Player( this, chosenPlayer );
   this.addChild(this.player1);
 
@@ -41,7 +44,8 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
   var randomAI = Math.floor(Math.random() * 8 + 1);
   this.player2 = new SuperLumberjackSyrupChug.Player( this, randomAI );
   this.player2.x = this.game.stage.width;
-  this.player2.scaleX = -1; 
+  this.player2.scaleX = -1;
+  this.player2.isEnemy = true;
   this.addChild(this.player2);
 
   // Create hud elements
@@ -57,6 +61,7 @@ SuperLumberjackSyrupChug.Play.update = function() {
   Kiwi.State.prototype.update.call( this );
 
   // Perform AI
+  this.player2.runAI();
 
   // Perform chugodynamics
   this.player1.run();

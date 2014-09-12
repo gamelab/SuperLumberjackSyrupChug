@@ -38,6 +38,14 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addSpriteSheet('continue', 'assets/img/character-select/continue.png', 69, 32 / 4);
 
 
+    // Game Over Assets
+    this.addSpriteSheet( 'gameover-next-round', 'assets/img/gameover/NEXT_ROUND.png', 130, 38 / 2);
+    this.addImage( 'gameover-quit', 'assets/img/gameover/QUIT.png' );
+    this.addSpriteSheet( 'gameover-try-again', 'assets/img/gameover/TRY_AGAIN.png', 130, 38 / 2);
+    this.addImage( 'gameover-tweet', 'assets/img/gameover/TWEET.png' );
+    this.addSpriteSheet( 'gameover-you-lost', 'assets/img/gameover/YOU_LOST.png', 176, 52 / 2);
+    this.addSpriteSheet( 'gameover-you-won', 'assets/img/gameover/YOU_WON.png', 176, 52 / 2);
+
     //In Game 
     this.addImage('chug', 'assets/img/in-game/chug.png');
     this.addImage('ready', 'assets/img/in-game/ready.png');
