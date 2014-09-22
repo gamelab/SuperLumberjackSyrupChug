@@ -168,7 +168,7 @@ SuperLumberjackSyrupChug.Player.prototype.win = function() {
 	victoryConfig.enemyWon = this.isEnemy;
 	victoryConfig.winner = this.characterNumber;
 	victoryConfig.player1 = this.state.player1.characterNumber;
-	this.state.game.states.switchState("GameOver", SuperLumberjackSyrupChug.GameOver, null, victoryConfig );
+	this.game.states.switchState("GameOver", null, null, victoryConfig );
 }
 
 SuperLumberjackSyrupChug.Player.prototype.runAI = function() {

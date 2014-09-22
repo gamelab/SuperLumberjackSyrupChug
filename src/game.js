@@ -23,5 +23,6 @@ game.states.addState(SuperLumberjackSyrupChug.Loading);
 game.states.addState(SuperLumberjackSyrupChug.Intro);
 game.states.addState(SuperLumberjackSyrupChug.Select);
 game.states.addState(SuperLumberjackSyrupChug.Play);
+game.states.addState(SuperLumberjackSyrupChug.GameOver);
 
 game.states.switchState("Loading");

@@ -37,7 +37,14 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 	this.tweet.x = Math.floor( this.game.stage.width - (this.tweet.width + this.tweet.y * 0.3) );
 	//this.tweet.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.addChild(this.tweet);
-	this.tweet.input.onUp.add(this.buttonTweet, this);
+
+	this.inputMethod = function(x,y) {
+		if(this.tweet.box.bounds.contains(x, y) ) {
+			this.buttonTweet();
+		}
+	};
+
+	this.game.input.onUp.add(this.inputMethod, this);
 }
 
 
@@ -46,51 +53,45 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 	var numFrames = 0;
 	switch( this.winner ) {
 		case 1:
-			lumberjackName = "paul";
-			numFrames = 4;
+			texture = this.textures["select-paul"];
 			break;
 		case 2:
-			lumberjackName = "gustave";
-			numFrames = 6;
+			texture = this.textures["select-gustave"];
 			break;
 		case 3:
-			lumberjackName = "bjorn";
-			numFrames = 6;
+			texture = this.textures["select-bjorn"];
 			break;
 		case 4:
-			lumberjackName = "fried";
-			numFrames = 6;
+			texture = this.textures["select-fried"];
 			break;
 		case 5:
-			lumberjackName = "big-jim";
-			numFrames = 4;
+			texture = this.textures["select-big-jim"];
 			break;
 		case 6:
-			lumberjackName = "luther";
-			numFrames = 6;
+			texture = this.textures["select-luther"];
 			break;
 		case 7:
-			lumberjackName = "pierre";
-			numFrames = 6;
+			texture = this.textures["select-pierre"];
 			break;
 		case 8:
-			lumberjackName = "magnus";
-			numFrames = 4;
+			texture = this.textures["select-magnus"];
 			break;
 		default:
-			lumberjackName = "paul";
-			numFrames = 0;
+			texture = this.textures["select-paul"];
 			break;
 	}
 
-	this.victorSprite = new Kiwi.GameObjects.Sprite( this, this.textures["select-"+lumberjackName], 94, 45);
+	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45);
+	this.victorSprite.x = (this.game.stage.width - this.victorSprite.width) * 0.5;
+
+	var cellNum = texture.cells.length;
 	var frames = [];
-	for(var i = 0;  i < numFrames; i++) {
+
+	for(var i = 0;  i < cellNum / 2; i++) {
 		frames[i] = i;
 	}
-	this.victorSprite.animation.add('default', frames, 0.1, true, true, true );
-	// Stupid thing will always play all the frames so MANUAL OVERRIDE
-	this.victorSprite.animation.currentAnimation._sequence.cells = frames;
+
+	this.victorSprite.animation.add('animate', frames, 0.1, true, true, false );
 	this.addChild(this.victorSprite);
 }
 
@@ -106,6 +107,8 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 	this.nextRound.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.nextRound);
 	this.nextRound.input.onUp.add(this.buttonReplay, this);
+
+	this.game.audioMan.playWinnerTrack();
 }
 
 
@@ -120,19 +123,39 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 	this.tryAgain.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.tryAgain);
 	this.tryAgain.input.onUp.add(this.buttonReplay, this);
+
+
+	this.game.audioMan.playLoserTrack();
 }
 
 
 SuperLumberjackSyrupChug.GameOver.buttonQuit = function() {
+	this.game.audioMan.playButton();
 	this.game.states.switchState("Intro");
 }
 
 
 SuperLumberjackSyrupChug.GameOver.buttonTweet = function() {
+	
+	this.game.audioMan.playButton();
+
 	// Insert social media here
+    var u        = "",
+        text     = "Choose your Lumberjack and faceoff in the stickest Syrup Chugging compentition ever.",
+        hashtags = "#syrupchug";
+
+    var path = "http://twitter.com/share?text=" + encodeURIComponent(text) +"&url="+ encodeURIComponent(u) + "&hashtags=" + hashtags
+    window.open(path, "_blank", "scrollbars=0, resizable=1, menubar=0, left=200, top=200, width=550, height=440");
+
 }
 
 
 SuperLumberjackSyrupChug.GameOver.buttonReplay = function() {
+	this.game.audioMan.playButton();
 	this.game.states.switchState('Play', null, null, { choosen: this.player1 });
+}
+
+
+SuperLumberjackSyrupChug.GameOver.shutDown = function() {
+	this.game.input.onUp.remove(this.inputMethod, this);
 }
