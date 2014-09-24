@@ -55,8 +55,10 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
 
 
     //Progress Bar
-    this.addImage('progress-bar-fill', 'assets/img/in-game/progress-bar-fill.png');
+    this.addImage('syrup-level', 'assets/img/in-game/syrup-level.png');
+    this.addImage('oxygen-level', 'assets/img/in-game/oxygen-level.png');
     this.addImage('progress-bar', 'assets/img/in-game/progress-bar.png');
+    this.addSpriteSheet('pause-button', 'assets/img/in-game/pause-button.png', 23, 42 / 2);
 
 
     //In Game Characters

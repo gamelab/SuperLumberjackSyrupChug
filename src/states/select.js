@@ -4,8 +4,8 @@ SuperLumberjackSyrupChug.Select = new Kiwi.State('Select');
 
 SuperLumberjackSyrupChug.Select.create = function () {
 
-	this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
-	this.addChild(this.background);
+	//this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
+	//	this.addChild(this.background);
 
 	this.game.audioMan.playSelectTrack();
 

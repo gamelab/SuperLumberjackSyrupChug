@@ -17,16 +17,17 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 
 
 	// Nice temp primitive bars
-	var barCanvas = document.createElement("canvas");
-	this.barCanvas = barCanvas;
-    barCanvas.width = 100;
-    barCanvas.height = 10;
-    this.barCanvasContext = barCanvas.getContext("2d");
-    this.barAtlas = new Kiwi.Textures.SingleImage("barTexture", barCanvas);
-    this.state.textureLibrary.add(this.barAtlas);
-    
-    this.bar = new Kiwi.GameObjects.Sprite(state, state.textures.barTexture, 5, 5);
+
+    this.bar = new Kiwi.GameObjects.StaticImage(state, state.textures['progress-bar'], 5, 5);
     this.addChild(this.bar);
+
+    this.syrupLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['syrup-level'], 6, 6);
+    this.syrupLevel.anchorPointX = 0;
+    this.addChild(this.syrupLevel);
+
+    this.oxygenLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['oxygen-level'], 6, 6 + this.syrupLevel.height);
+    this.oxygenLevel.anchorPointX = 0;
+    this.addChild(this.oxygenLevel);
 
 	// Underbar
 	// Stomach
@@ -39,7 +40,7 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 	this.stomachMax = 100;
 	this.jugChug = 1;
 	this.mouth = 0;
-	this.mouthCapacity = 20;
+	this.mouthCapacity = 30;
 	this.mouthSwallow = 0.1;
 	this.lungOxygen = 100;
 	this.lungCapacity = 100;
@@ -127,29 +128,17 @@ SuperLumberjackSyrupChug.Player.prototype.digest = function() {
 }
 
 SuperLumberjackSyrupChug.Player.prototype.render = function() {
-	this.barAtlas.dirty = true;
-	var ctx = this.barCanvasContext;
-	ctx.clearRect(0,0, this.barCanvas.width, this.barCanvas.height);
-	// Stomach
-	var stomachBarWidth = this.barCanvas.width * this.stomach / this.stomachMax;
-	ctx.fillStyle = "#e01030";
-	ctx.fillRect(0,0, stomachBarWidth, this.barCanvas.height );
-	// Mouth
-	var mouthBarWidth = this.barCanvas.width * this.mouth / this.stomachMax;
-	ctx.fillStyle = "#ffc080";
-	ctx.fillRect(stomachBarWidth,0, mouthBarWidth,this.barCanvas.height);
-	// Lungs
-	var lungBarWidth = this.barCanvas.width * this.lungOxygen / this.lungCapacity;
 
-	ctx.clearRect(0,this.barCanvas.height * 0.8, lungBarWidth, this.barCanvas.height * 0.2);
-	ctx.fillStyle = "#0080ff";
-	ctx.fillRect(0,this.barCanvas.height * 0.8, lungBarWidth, this.barCanvas.height * 0.2);
+
+	// Stomach
+	this.syrupLevel.scaleX = Math.min(1, Math.max( this.stomach / this.stomachMax, 0));
+
+
+	// Lungs
+	this.oxygenLevel.scaleX = Math.min(1, Math.max( this.lungOxygen / this.lungCapacity, 0));
 
 	// Choke
 	if(this.choking) {
-		var chokeBarWidth = this.barCanvas.width * this.chokeLeft / this.stomachMax;
-		ctx.fillRect(stomachBarWidth - chokeBarWidth, 0, chokeBarWidth, this.barCanvas.height);
-
 		this.character.animation.play('choke', false);
 		this.chockingSound.play();
 	}
@@ -172,6 +161,7 @@ SuperLumberjackSyrupChug.Player.prototype.win = function() {
 }
 
 SuperLumberjackSyrupChug.Player.prototype.runAI = function() {
+	
 	this.aiChugIndex += this.state.game.time.rate;
 	this.aiChugProgress += this.aiChugRate + Math.sin(this.aiChugIndex * this.aiVariationFreq + this.aiVariationPhase) * this.aiVariation;
 	if( 1 <= this.aiChugProgress) {

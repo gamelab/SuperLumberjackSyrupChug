@@ -18,6 +18,8 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
 
   // Create input methods
   var self = this;
+  this.started = false;
+  this.pause = false;
 
   // Create background
   this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
@@ -27,6 +29,41 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
   this.table = new Kiwi.GameObjects.StaticImage(this, this.textures.table, 0, this.game.stage.height);
   this.table.y -= this.table.height;
   this.addChild( this.table );
+
+  //Pause Button
+  this.pauseButton = new Kiwi.GameObjects.Sprite(this, this.textures['pause-button'], 0, 5);
+  this.pauseButton.x = (this.game.stage.width - this.pauseButton.width) * 0.5;
+  this.addChild(this.pauseButton);
+
+  this.pauseButton.input.onEntered.add(function() {
+    this.pauseButton.cellIndex = 1;
+  }, this);
+
+  this.pauseButton.input.onLeft.add(function() {
+    this.pauseButton.cellIndex = 0;
+  }, this);
+
+  this.pauseButton.input.onDown.add(function() {
+    this.pauseButton.cellIndex = 1;
+  }, this);
+
+  this.pauseButton.input.onUp.add(function() {
+    this.pauseButton.cellIndex = 0;
+    this.pauseGame();
+    //Add pause functionality here.
+  }, this);
+
+
+  this.continueButton = new Kiwi.GameObjects.Sprite(this, this.textures['continue'], 0, 0);
+  this.continueButton.x = (this.game.stage.width - this.continueButton.width) * 0.5;
+  this.continueButton.y = (this.game.stage.height - this.continueButton.height) * 0.5;
+  this.addChild(this.continueButton);
+  this.continueButton.visible = false;
+
+  this.continueButton.input.onUp.add( function() {
+    this.unpauseGame();
+  }, this);
+
 
   
   // Create and connect player 1
@@ -40,6 +77,11 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
   // Create and connect player 2
   // In multiplayer, this will be connectcted to a server and another player
   var randomAI = Math.floor(Math.random() * 8 + 1);
+
+  while(randomAI == chosenPlayer) {
+    randomAI = Math.floor(Math.random() * 8 + 1);
+  }
+
   this.player2 = new SuperLumberjackSyrupChug.Player( this, randomAI );
   this.player2.x = this.game.stage.width;
   this.player2.scaleX = -1;
@@ -96,11 +138,48 @@ SuperLumberjackSyrupChug.Play.start = function() {
   this.addChild( this.tapToChug );
 }
 
+SuperLumberjackSyrupChug.Play.pauseGame = function() {
+
+  if(!this.started) return;
+
+  game.audio.mute = true;
+
+  this.pause = true;
+  this.continueButton.visible = true;
+
+  this.background.visible = false;
+  this.pauseButton.visible = false;
+  this.table.visible = false;
+  this.player1.visible = false;
+  this.player2.visible = false;
+  this.tapToChug.visible = false;
+
+
+}
+
+SuperLumberjackSyrupChug.Play.unpauseGame = function() {
+  if(this.started && this.continueButton.visible && this.pause) {
+
+    this.game.audio.mute = false;
+
+    this.pause = false;
+    this.continueButton.visible = false;
+
+    this.background.visible = true;
+    this.pauseButton.visible = true;
+    this.table.visible = true;
+    this.player1.visible = true;
+    this.player2.visible = true;
+    this.tapToChug.visible = true;
+
+  }
+}
+
 SuperLumberjackSyrupChug.Play.update = function() {
   //Super method update loop
   Kiwi.State.prototype.update.call( this );
 
-  if(this.started) {
+  if(this.started && !this.pause) {
     // Perform AI
     this.player2.runAI();
   }
@@ -120,7 +199,12 @@ SuperLumberjackSyrupChug.Play.update = function() {
 }
 
 SuperLumberjackSyrupChug.Play.tap = function() {
-  this.player1.chug();  
-  this.lastTapTime = this.game.time.now();
+  if(!this.pause) {
+    this.player1.chug();  
+    this.lastTapTime = this.game.time.now();
+  }
+}
 
+SuperLumberjackSyrupChug.Play.shutDown = function() {
+  this.game.input.onUp.remove( this.tap, this );
 }
