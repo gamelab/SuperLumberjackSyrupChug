@@ -5,6 +5,9 @@ SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Intro', 'as
 
 SuperLumberjackSyrupChug.Loading.preload = function () {
 
+    //Add the tournament manager to the game
+    this.game.tournament = new SuperLumberjackSyrupChug.Tournament( this.game );
+
     //Make sure to call the super at the top.
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
     KiwiLoadingScreen.prototype.preload.call(this);
@@ -71,6 +74,10 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 184 / 2, 321 / 3);
     this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 184 / 2, 321 / 3);
 
+
+    //Champ assets here...
+
+
     //Sounds
     this.addAudio('button', 'assets/sounds/ButtonPush_Effect.mp3');
     this.addAudio('countdown', 'assets/sounds/Countdown_Gamescreen.mp3');
@@ -81,5 +88,6 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addAudio('outOfBreath', 'assets/sounds/OutofBreath_Effect.mp3');
     this.addAudio('winner', 'assets/sounds/Winner_Effect.mp3');
     this.addAudio('select-loop', 'assets/sounds/SelectScreen_Loop.mp3');
+    this.addAudio('final-loop', 'assets/sounds/FinalScreen_Loop.mp3');
 
 };

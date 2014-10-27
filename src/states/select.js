@@ -97,9 +97,9 @@ SuperLumberjackSyrupChug.Select.selectCharacter = function(jack) {
 
 SuperLumberjackSyrupChug.Select.proceed = function() {
 
-	if(this.selectedLumberjack !== null) {
+	if(this.selectedLumberjack !== null && this.game.tournament.start( this.selectedLumberjack.id ) ) {
 		this.game.audioMan.playButton();
-		this.game.states.switchState('Play', null, null, { choosen: this.selectedLumberjack.id })
+		this.game.states.switchState('Play');
 	}
 
 }

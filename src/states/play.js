@@ -14,7 +14,7 @@ SuperLumberjackSyrupChug.Play = new Kiwi.State('Play');
 /**
 * This create method is executed when a Kiwi state has finished loading any resources that were required to load.
 */
-SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
+SuperLumberjackSyrupChug.Play.create = function () {
 
   // Create input methods
   var self = this;
@@ -64,25 +64,17 @@ SuperLumberjackSyrupChug.Play.create = function (chosenPlayer) {
     this.unpauseGame();
   }, this);
 
+  //Tell the tournament manager we want the next opponent
+  this.game.tournament.nextOpponent();
 
-  
   // Create and connect player 1
   // This is the player sitting at this computer
-  if(typeof chosenPlayer !== "number") {
-    chosenPlayer = 1;
-  }
-  this.player1 = new SuperLumberjackSyrupChug.Player( this, chosenPlayer );
+  this.player1 = new SuperLumberjackSyrupChug.Player( this, this.game.tournament.player );
   this.addChild(this.player1);
 
   // Create and connect player 2
   // In multiplayer, this will be connectcted to a server and another player
-  var randomAI = Math.floor(Math.random() * 8 + 1);
-
-  while(randomAI == chosenPlayer) {
-    randomAI = Math.floor(Math.random() * 8 + 1);
-  }
-
-  this.player2 = new SuperLumberjackSyrupChug.Player( this, randomAI );
+  this.player2 = new SuperLumberjackSyrupChug.Player( this, this.game.tournament.currentOpponent );
   this.player2.x = this.game.stage.width;
   this.player2.scaleX = -1;
   this.player2.isEnemy = true;
@@ -142,7 +134,8 @@ SuperLumberjackSyrupChug.Play.pauseGame = function() {
 
   if(!this.started) return;
 
-  game.audio.mute = true;
+  this.prePauseMuteState = this.game.audio.mute;
+  this.game.audio.mute = true;
 
   this.pause = true;
   this.continueButton.visible = true;
@@ -160,7 +153,7 @@ SuperLumberjackSyrupChug.Play.pauseGame = function() {
 SuperLumberjackSyrupChug.Play.unpauseGame = function() {
   if(this.started && this.continueButton.visible && this.pause) {
 
-    this.game.audio.mute = false;
+    this.game.audio.mute = this.prePauseMuteState;
 
     this.pause = false;
     this.continueButton.visible = false;
@@ -206,5 +199,6 @@ SuperLumberjackSyrupChug.Play.tap = function() {
 }
 
 SuperLumberjackSyrupChug.Play.shutDown = function() {
+ 
   this.game.input.onUp.remove( this.tap, this );
 }

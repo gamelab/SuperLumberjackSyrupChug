@@ -14,37 +14,24 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 		this.configLose();
 	}
 	else {
-		// You won; config victory screen
-		this.configWin();
+
+		//Is the tournament finished?
+		if( this.game.tournament.finished() ) {
+
+			//You won the tournment; champion screen
+			this.configChamp();
+
+		} else {
+
+			// You won; config victory screen
+			this.configWin();
+	  		this.game.tournament.opponentBeaten();
+
+	  	}
+	
 	}
 
-	// Config universal buttons
 
-	// Victor display
-	this.displayVictor();
-
-	// Quit button
-	this.quit = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-quit"], 0, 0);
-	this.quit.y = Math.floor( (this.game.stage.height - this.quit.height) / 2 );
-	this.quit.x = Math.floor( this.quit.y * 0.3 );
-	//this.quit.animation.add('default', [0,1,2,3], 0.05, true, true);
-	this.addChild(this.quit);
-	this.quit.input.onUp.add(this.buttonQuit, this);
-
-	// Tweet button
-	this.tweet = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-tweet"], 0, 0);
-	this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 );
-	this.tweet.x = Math.floor( this.game.stage.width - (this.tweet.width + this.tweet.y * 0.3) );
-	//this.tweet.animation.add('default', [0,1,2,3], 0.05, true, true);
-	this.addChild(this.tweet);
-
-	this.inputMethod = function(x,y) {
-		if(this.tweet.box.bounds.contains(x, y) ) {
-			this.buttonTweet();
-		}
-	};
-
-	this.game.input.onUp.add(this.inputMethod, this);
 }
 
 
@@ -95,8 +82,14 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 	this.addChild(this.victorSprite);
 }
 
+/**
+* -------------------------------- 
+*  GameOver screen types.
+* --------------------------------
+**/
 
 SuperLumberjackSyrupChug.GameOver.configWin = function() {
+
 	// "You Won" logo
 	this.youWon = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-won"], 19, 6);
 	this.youWon.animation.add('default', [0,1], 0.05, true, true);
@@ -109,10 +102,15 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 	this.nextRound.input.onUp.add(this.buttonReplay, this);
 
 	this.game.audioMan.playWinnerTrack();
+
+	this.showQuit();
+	this.showTweet( false, true );
+	this.displayVictor();
 }
 
 
 SuperLumberjackSyrupChug.GameOver.configLose = function() {
+
 	// "You Lost" logo
 	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 19, 6);
 	this.youLost.animation.add('default', [0,1], 0.05, true, true);
@@ -124,10 +122,69 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 	this.addChild(this.tryAgain);
 	this.tryAgain.input.onUp.add(this.buttonReplay, this);
 
-
 	this.game.audioMan.playLoserTrack();
+
+	this.showQuit();
+	this.showTweet( false, true );
+	this.displayVictor();
 }
 
+SuperLumberjackSyrupChug.GameOver.configChamp = function() {
+
+	this.game.audioMan.playFinalTrack();
+
+}
+
+
+/**
+* -------------------------------- 
+*  Screen Global Buttons.
+* --------------------------------
+**/
+SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
+	this.tweet = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-tweet"], 0, 0);
+	this.addChild(this.tweet);
+
+
+	if(centerY) {
+		this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 );
+	} else {
+
+	}
+
+	if(centerX) {
+		this.tweet.x = Math.floor( (this.game.stage.width - this.tweet.width) / 2 );
+	} else {
+		this.tweet.x = Math.floor( this.game.stage.width - (this.tweet.width + this.tweet.y * 0.3) );
+	}
+
+	this.inputMethod = function(x,y) {
+		if(this.tweet.box.bounds.contains(x, y) ) {
+			this.buttonTweet();
+		}
+	};
+
+	this.game.input.onUp.add(this.inputMethod, this);
+};
+
+
+SuperLumberjackSyrupChug.GameOver.showQuit = function() {
+
+	this.quit = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-quit"], 0, 0);
+	this.quit.y = Math.floor( (this.game.stage.height - this.quit.height) / 2 );
+	this.quit.x = Math.floor( this.quit.y * 0.3 );
+	
+	this.addChild(this.quit);
+	this.quit.input.onUp.add(this.buttonQuit, this);
+
+}
+
+
+/**
+* -------------------------------- 
+*  Input methods.
+* --------------------------------
+**/
 
 SuperLumberjackSyrupChug.GameOver.buttonQuit = function() {
 	this.game.audioMan.playButton();

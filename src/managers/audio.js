@@ -11,6 +11,7 @@ SuperLumberjackSyrupChug.Audio = function(game) {
 	this.gameTrack = new Kiwi.Sound.Audio(this.game, 'game-loop', 0.6, true);
 	this.loserTrack = new Kiwi.Sound.Audio(this.game, 'loser', 0.8, false);
 	this.winnerTrack = new Kiwi.Sound.Audio(this.game, 'winner', 0.8, false);
+	this.finalTrack = new Kiwi.Sound.Audio(this.game, 'final-loop', 0.8, true);
 
 	this.button = new Kiwi.Sound.Audio(this.game, 'button', 0.8, false);
 	this.countDown = new Kiwi.Sound.Audio(this.game, 'countdown', 0.8, false);
@@ -71,6 +72,29 @@ SuperLumberjackSyrupChug.Audio.prototype.playLoserTrack = function() {
 	}
 
 }
+
+SuperLumberjackSyrupChug.Audio.prototype.playFinalTrack = function() {
+
+	if(this.gameTrack.isPlaying) {
+		this.gameTrackTween.stop();
+		this.gameTrackTween.onComplete( function() {
+
+			this.stopBackgroundTrack();
+			this.currentBackgroundTrack = this.finalTrack;
+			this.currentBackgroundTrack.play();
+
+		}, this);
+		this.gameTrackTween.to({volume:0}, 1000);
+		this.gameTrackTween.start();
+		
+	} else {
+		this.stopBackgroundTrack();
+		this.currentBackgroundTrack = this.finalTrack;
+		this.currentBackgroundTrack.play();
+
+	}
+
+};
 
 SuperLumberjackSyrupChug.Audio.prototype.playWinnerTrack = function() {
 
