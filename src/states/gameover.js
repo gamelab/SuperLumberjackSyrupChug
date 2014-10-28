@@ -8,6 +8,7 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 	this.winner = winner;
 	this.player1 = player1;
 
+
 	// Determine win or loss
 	if( enemyWon ) {
 		// You lost; config lose screen
@@ -99,12 +100,16 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 	this.nextRound = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-next-round"], 44, 103);
 	this.nextRound.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.nextRound);
-	this.nextRound.input.onUp.add(this.buttonReplay, this);
-
-	this.game.audioMan.playWinnerTrack();
 
 	this.showQuit();
 	this.showTweet( false, true );
+
+	var that = this;
+	setTimeout(function() {
+		that.nextRound.input.onUp.add(that.buttonReplay, that);
+	}, 500);
+
+	this.game.audioMan.playWinnerTrack();
 	this.displayVictor();
 }
 
@@ -120,18 +125,73 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 103);
 	this.tryAgain.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.tryAgain);
-	this.tryAgain.input.onUp.add(this.buttonReplay, this);
-
-	this.game.audioMan.playLoserTrack();
 
 	this.showQuit();
 	this.showTweet( false, true );
+
+	var that = this;
+	setTimeout(function() {
+		that.tryAgain.input.onUp.add(that.buttonReplay, that);
+	}, 500);
+
+	this.game.audioMan.playLoserTrack();
 	this.displayVictor();
 }
 
 SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
+	// Congrats
+	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2);
+	this.congrats.x = (this.game.stage.width - this.congrats.width) * 0.5;
+	this.congrats.animation.add('default', [1,0], 0.075, true, true);
+	this.addChild( this.congrats );
+
+	// Subtext 
+	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17);
+	this.subtext.x = (this.game.stage.width - this.subtext.width) * 0.5;
+	this.addChild( this.subtext );
+
+	//Create Jugs
+	this.jugs = [];
+	this.currentJug = 0;
+	var x = 11;
+
+	for(var i = 0; i < 8; i++) {
+		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36);
+		jug.x = x;
+		x += jug.width + 1;
+		this.addChild( jug );
+		this.jugs.push( jug );
+
+		//Animation
+		var anim = jug.animation.add('flash', [1,0], 0.075, false);
+		anim.onStop.add( function() {
+			this.currentJug++;
+			if(this.currentJug >= this.jugs.length) this.currentJug = 0;
+			this.jugs[this.currentJug].animation.play('flash');
+			this.jugs[this.currentJug].cellIndex = 1;
+		}, this);
+	}
+
+	this.jugs[0].animation.play('flash');
+
+
+	// Champion Text
+	this.champion = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-champion'], 0, 56);
+	this.champion.x = (this.game.stage.width - this.champion.width) * 0.5 - 1;
+	this.addChild(this.champion);
+
+
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 98);
+	this.addChild(this.tryAgain);
+
+	this.showTweet(true, false);
 	this.game.audioMan.playFinalTrack();
+
+	var that = this;
+	setTimeout(function() {
+		that.tryAgain.input.onUp.add(that.buttonQuit, that);
+	}, 500);
 
 }
 
@@ -145,11 +205,10 @@ SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
 	this.tweet = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-tweet"], 0, 0);
 	this.addChild(this.tweet);
 
-
 	if(centerY) {
 		this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 );
 	} else {
-
+		this.tweet.y = 76;
 	}
 
 	if(centerX) {
@@ -164,7 +223,11 @@ SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
 		}
 	};
 
-	this.game.input.onUp.add(this.inputMethod, this);
+	var that = this;
+	setTimeout(function() {
+		that.game.input.onUp.add(that.inputMethod, that);
+	}, 500);
+
 };
 
 
@@ -175,7 +238,11 @@ SuperLumberjackSyrupChug.GameOver.showQuit = function() {
 	this.quit.x = Math.floor( this.quit.y * 0.3 );
 	
 	this.addChild(this.quit);
-	this.quit.input.onUp.add(this.buttonQuit, this);
+
+	var that = this;
+	setTimeout(function() {
+		that.quit.input.onUp.add(that.buttonQuit, that);
+	}, 500);
 
 }
 

@@ -9,6 +9,7 @@ SuperLumberjackSyrupChug.Intro = new Kiwi.State('Intro');
 
 SuperLumberjackSyrupChug.Intro.init = function() {
 	this.game.audioMan = new SuperLumberjackSyrupChug.Audio( this.game );
+	this.game.stage.resize(222, 125);
 }
 
 

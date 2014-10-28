@@ -10,8 +10,8 @@
 //Initialise the Kiwi Game. 
 
 var gameOptions = {
-	width: 222,
-	height: 125,
+	width: 960,
+	height: 541,
 	renderer: Kiwi.RENDERER_CANVAS,
 	scaleType: Kiwi.Stage.SCALE_FIT
 };

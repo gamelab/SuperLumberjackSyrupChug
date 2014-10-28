@@ -49,6 +49,14 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addSpriteSheet( 'gameover-you-lost', 'assets/img/gameover/YOU_LOST.png', 176, 52 / 2);
     this.addSpriteSheet( 'gameover-you-won', 'assets/img/gameover/YOU_WON.png', 176, 52 / 2);
 
+
+    //Champ assets here...
+    this.addSpriteSheet('gameover-congratulations', 'assets/img/champ/congrats.png', 211, 26 / 2);
+    this.addSpriteSheet('gameover-jug', 'assets/img/champ/jugs.png', 48 / 2, 40);
+    this.addImage('gameover-champion', 'assets/img/champ/champion.png');
+    this.addImage('gameover-subtext', 'assets/img/champ/subtext.png');
+
+
     //In Game 
     this.addImage('chug', 'assets/img/in-game/chug.png');
     this.addImage('ready', 'assets/img/in-game/ready.png');
@@ -74,8 +82,6 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 184 / 2, 321 / 3);
     this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 184 / 2, 321 / 3);
 
-
-    //Champ assets here...
 
 
     //Sounds
