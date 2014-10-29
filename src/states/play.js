@@ -22,13 +22,8 @@ SuperLumberjackSyrupChug.Play.create = function () {
   this.pause = false;
 
   // Create background
-  this.background = new Kiwi.GameObjects.StaticImage(this, this.textures.background, 0, 0);
+  this.background = this.game.background.create( this );
   this.addChild(this.background);
-
-  //Table
-  this.table = new Kiwi.GameObjects.StaticImage(this, this.textures.table, 0, this.game.stage.height);
-  this.table.y -= this.table.height;
-  this.addChild( this.table );
 
   //Pause Button
   this.pauseButton = new Kiwi.GameObjects.Sprite(this, this.textures['pause-button'], 0, 5);
@@ -142,7 +137,6 @@ SuperLumberjackSyrupChug.Play.pauseGame = function() {
 
   this.background.visible = false;
   this.pauseButton.visible = false;
-  this.table.visible = false;
   this.player1.visible = false;
   this.player2.visible = false;
   this.tapToChug.visible = false;
@@ -160,7 +154,6 @@ SuperLumberjackSyrupChug.Play.unpauseGame = function() {
 
     this.background.visible = true;
     this.pauseButton.visible = true;
-    this.table.visible = true;
     this.player1.visible = true;
     this.player2.visible = true;
     this.tapToChug.visible = true;
@@ -199,6 +192,6 @@ SuperLumberjackSyrupChug.Play.tap = function() {
 }
 
 SuperLumberjackSyrupChug.Play.shutDown = function() {
- 
+  this.game.background.next();
   this.game.input.onUp.remove( this.tap, this );
 }

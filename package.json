@@ -1,7 +1,7 @@
 {
     "name": "SuperLumberjackSyrubChug",
-    "version": "0.1.0",
-    "filenameBase": "superlumberjacksyrubchug",
+    "version": "0.9.0",
+    "filenameBase": "syrubchug",
     "description": "Description for SuperLumberjackSyrubChug.",
     "author": {
         "name" : "",
@@ -26,6 +26,7 @@
         "grunt-contrib-uglify": "0.2.x",
         "grunt-contrib-copy":  "0.4.x",
         "grunt-contrib-concat" : "latest",
-        "grunt-contrib-connect": "~0.3.0"
+        "grunt-contrib-connect": "~0.3.0",
+        "grunt-zip": "latest"
     }
 }

@@ -1,19 +1,22 @@
 
 var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
-SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Intro', 'assets/img/loading/');
+SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Splash', 'assets/img/loading/');
 
 SuperLumberjackSyrupChug.Loading.preload = function () {
 
-    //Add the tournament manager to the game
-    this.game.tournament = new SuperLumberjackSyrupChug.Tournament( this.game );
 
     //Make sure to call the super at the top.
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
     KiwiLoadingScreen.prototype.preload.call(this);
 
+    //Splash Screen
+    this.addImage('burns', 'assets/img/splash/burns.png'); //Tag this file...
+
     //Background
-    this.addImage('background', 'assets/img/trees.png');
+    this.addImage('morning-trees', 'assets/img/background/morning.png');
+    this.addImage('noon-trees', 'assets/img/background/noon.png');
+    this.addImage('night-trees', 'assets/img/background/night.png');
     
     //Main Menu
     this.addSpriteSheet('title', 'assets/img/main-menu/title.png', 149, 540 / 6);
@@ -42,12 +45,12 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
 
 
     // Game Over Assets
-    this.addSpriteSheet( 'gameover-next-round', 'assets/img/gameover/NEXT_ROUND.png', 130, 38 / 2);
+    this.addSpriteSheet( 'gameover-next-round', 'assets/img/gameover/NEXT_ROUND.png', 130, 42 / 2);
     this.addImage( 'gameover-quit', 'assets/img/gameover/QUIT.png' );
-    this.addSpriteSheet( 'gameover-try-again', 'assets/img/gameover/TRY_AGAIN.png', 130, 38 / 2);
+    this.addSpriteSheet( 'gameover-try-again', 'assets/img/gameover/TRY_AGAIN.png', 130, 42 / 2);
     this.addImage( 'gameover-tweet', 'assets/img/gameover/TWEET.png' );
-    this.addSpriteSheet( 'gameover-you-lost', 'assets/img/gameover/YOU_LOST.png', 176, 52 / 2);
-    this.addSpriteSheet( 'gameover-you-won', 'assets/img/gameover/YOU_WON.png', 176, 52 / 2);
+    this.addSpriteSheet( 'gameover-you-lost', 'assets/img/gameover/YOU_LOST.png', 176, 56 / 2);
+    this.addSpriteSheet( 'gameover-you-won', 'assets/img/gameover/YOU_WON.png', 176, 56 / 2);
 
 
     //Champ assets here...
@@ -60,7 +63,6 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     //In Game 
     this.addImage('chug', 'assets/img/in-game/chug.png');
     this.addImage('ready', 'assets/img/in-game/ready.png');
-    this.addImage('table', 'assets/img/in-game/table.png');
     this.addImage('tap-to-chug', 'assets/img/in-game/tap-to-chug.png');
     this.addSpriteSheet('numbers', 'assets/img/in-game/numbers.png', 120 / 10, 13);
 
@@ -73,27 +75,29 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
 
 
     //In Game Characters
-    this.addSpriteSheet('ingame-paul', 'assets/img/in-game/chars/paul.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-gustave', 'assets/img/in-game/chars/gustave.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-bjorn', 'assets/img/in-game/chars/bjorn.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-fried', 'assets/img/in-game/chars/friedrich.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-big-jim', 'assets/img/in-game/chars/bigjim.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-luther', 'assets/img/in-game/chars/luther.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 184 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 184 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-paul', 'assets/img/in-game/chars/paul.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-gustave', 'assets/img/in-game/chars/gustave.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-bjorn', 'assets/img/in-game/chars/bjorn.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-fried', 'assets/img/in-game/chars/friedrich.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-big-jim', 'assets/img/in-game/chars/bigjim.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-luther', 'assets/img/in-game/chars/luther.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 188 / 2, 321 / 3);
 
 
 
     //Sounds
-    this.addAudio('button', 'assets/sounds/ButtonPush_Effect.mp3');
-    this.addAudio('countdown', 'assets/sounds/Countdown_Gamescreen.mp3');
-    this.addAudio('game-loop', 'assets/sounds/GameplayLoop_Gamescreen.mp3');
-    this.addAudio('gulping', 'assets/sounds/GulpingSound_Effect.mp3');
-    this.addAudio('title-loop', 'assets/sounds/Loop_TitleScreen.mp3');
-    this.addAudio('loser', 'assets/sounds/Loser_Effect.mp3');
-    this.addAudio('outOfBreath', 'assets/sounds/OutofBreath_Effect.mp3');
-    this.addAudio('winner', 'assets/sounds/Winner_Effect.mp3');
-    this.addAudio('select-loop', 'assets/sounds/SelectScreen_Loop.mp3');
-    this.addAudio('final-loop', 'assets/sounds/FinalScreen_Loop.mp3');
+    var preURL = 'assets/sounds/';
+
+    this.addAudio('button', [preURL + 'ButtonPush_Effect.wav', preURL + 'ButtonPush_Effect.mp3']);
+    this.addAudio('countdown', [preURL + 'Countdown_Gamescreen.wav', preURL + 'Countdown_Gamescreen.mp3']);
+    this.addAudio('game-loop', [preURL + 'GameplayLoop_Gamescreen.wav', preURL + 'GameplayLoop_Gamescreen.mp3']);
+    this.addAudio('gulping', [preURL + 'GulpingSound_Effect.wav', preURL + 'GulpingSound_Effect.mp3']);
+    this.addAudio('title-loop', [preURL + 'Loop_TitleScreen.wav', preURL + 'Loop_TitleScreen.mp3']);
+    this.addAudio('loser', [preURL + 'Loser_Effect.wav', preURL + 'Loser_Effect.mp3']);
+    this.addAudio('outOfBreath', [preURL + 'OutofBreath_Effect.wav', preURL + 'OutofBreath_Effect.mp3']);
+    this.addAudio('winner', [preURL + 'Winner_Effect.wav', preURL + 'Winner_Effect.mp3']);
+    this.addAudio('select-loop', [preURL + 'SelectScreen_Loop.wav', preURL + 'SelectScreen_Loop.mp3']);
+    this.addAudio('final-loop', [preURL + 'FinalScreen_Loop.wav', preURL + 'FinalScreen_Loop.mp3']);
 
 };

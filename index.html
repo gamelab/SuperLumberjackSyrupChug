@@ -1,43 +1,15 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+﻿<html>
 <head>
-    <meta charset="utf-8" />
     <title>SuperLumberjackSyrubChug</title>
+
+    <script src="lib/cocoon.js"></script>
     <script src="lib/kiwi.js"></script>
     <script src="lib/kiwipreloader.js"></script>
-    <script src="src/managers/player.js"></script>
-    <script src="src/managers/playermodel.js"></script>
-    <script src="src/managers/tournament.js"></script>
-    <script src="src/managers/audio.js"></script>
 
-    <script type="text/javascript" src="src/states/play.js"></script>
-    <script type="text/javascript" src="src/states/intro.js"></script>
-    <script type="text/javascript" src="src/states/select.js"></script>
-    <script type="text/javascript" src="src/states/loading.js"></script>
-    <script type="text/javascript" src="src/states/gameover.js"></script>
-    <script type="text/javascript" src="src/game.js"></script>
-
-    <style type="text/css">
-        #content canvas {
-            image-rendering: optimizeSpeed;             /* FUCK SMOOTHING, GIVE ME SPEED  */
-            image-rendering: -moz-crisp-edges;          /* Firefox                        */
-            image-rendering: -o-crisp-edges;            /* Opera                          */
-            image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
-            image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
-            -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
-        }
-
-        #game-container {
-            max-width: 666px;
-            margin: 0 auto;
-        }
-    </style>
 </head>
 <body>
 
-    <div id="game-container">
-        <div id="content"></div>
-    </div>
+    <script src="build/syrubchug-0.9.0.cocoon.js"></script>
 
 </body>
 </html>

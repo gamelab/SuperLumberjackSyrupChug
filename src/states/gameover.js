@@ -15,6 +15,8 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 		this.configLose();
 	}
 	else {
+		//You won! Choose the next opponent
+	  	this.game.tournament.opponentBeaten();
 
 		//Is the tournament finished?
 		if( this.game.tournament.finished() ) {
@@ -26,7 +28,6 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 
 			// You won; config victory screen
 			this.configWin();
-	  		this.game.tournament.opponentBeaten();
 
 	  	}
 	
@@ -70,7 +71,7 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 	}
 
 	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45);
-	this.victorSprite.x = (this.game.stage.width - this.victorSprite.width) * 0.5;
+	this.victorSprite.x = Math.round((this.game.stage.width - this.victorSprite.width) * 0.5);
 
 	var cellNum = texture.cells.length;
 	var frames = [];
@@ -117,7 +118,7 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 SuperLumberjackSyrupChug.GameOver.configLose = function() {
 
 	// "You Lost" logo
-	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 19, 6);
+	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 20, 5);
 	this.youLost.animation.add('default', [0,1], 0.05, true, true);
 	this.addChild(this.youLost);
 
@@ -142,13 +143,13 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 	// Congrats
 	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2);
-	this.congrats.x = (this.game.stage.width - this.congrats.width) * 0.5;
+	this.congrats.x = Math.round((this.game.stage.width - this.congrats.width) * 0.5);
 	this.congrats.animation.add('default', [1,0], 0.075, true, true);
 	this.addChild( this.congrats );
 
 	// Subtext 
 	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17);
-	this.subtext.x = (this.game.stage.width - this.subtext.width) * 0.5;
+	this.subtext.x = Math.round((this.game.stage.width - this.subtext.width) * 0.5);
 	this.addChild( this.subtext );
 
 	//Create Jugs
@@ -158,7 +159,7 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 	for(var i = 0; i < 8; i++) {
 		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36);
-		jug.x = x;
+		jug.x = Math.round(x);
 		x += jug.width + 1;
 		this.addChild( jug );
 		this.jugs.push( jug );
@@ -268,9 +269,15 @@ SuperLumberjackSyrupChug.GameOver.buttonTweet = function() {
         text     = "Choose your Lumberjack and faceoff in the stickest Syrup Chugging compentition ever.",
         hashtags = "#syrupchug";
 
-    var path = "http://twitter.com/share?text=" + encodeURIComponent(text) +"&url="+ encodeURIComponent(u) + "&hashtags=" + hashtags
-    window.open(path, "_blank", "scrollbars=0, resizable=1, menubar=0, left=200, top=200, width=550, height=440");
+    var path = "http://twitter.com/share?text=" + encodeURIComponent(text) +"&url="+ encodeURIComponent(u) + "&hashtags=" + hashtags;
 
+    if(typeof Cocoon !== "undefined" && typeof Cocoon.App !== "undefined" && typeof Cocoon.App.openURL !== "undefined") {
+    	Cocoon.App.openURL(path);
+
+    } else {
+    	window.open(path, "_blank", "scrollbars=0, resizable=1, menubar=0, left=200, top=200, width=550, height=440");
+
+    }
 }
 
 

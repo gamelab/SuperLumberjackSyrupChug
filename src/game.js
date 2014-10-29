@@ -13,7 +13,8 @@ var gameOptions = {
 	width: 960,
 	height: 541,
 	renderer: Kiwi.RENDERER_CANVAS,
-	scaleType: Kiwi.Stage.SCALE_FIT
+	scaleType: Kiwi.Stage.SCALE_FIT,
+	debug: Kiwi.DEBUG_OFF
 };
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOptions);
@@ -24,5 +25,6 @@ game.states.addState(SuperLumberjackSyrupChug.Intro);
 game.states.addState(SuperLumberjackSyrupChug.Select);
 game.states.addState(SuperLumberjackSyrupChug.Play);
 game.states.addState(SuperLumberjackSyrupChug.GameOver);
+game.states.addState(SuperLumberjackSyrupChug.Splash);
 
 game.states.switchState("Loading");
