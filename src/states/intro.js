@@ -11,7 +11,8 @@ SuperLumberjackSyrupChug.Intro.init = function() {
 	this.game.audioMan = new SuperLumberjackSyrupChug.Audio( this.game );
     this.game.tournament = new SuperLumberjackSyrupChug.Tournament( this.game );
     this.game.background = new SuperLumberjackSyrupChug.Background( this.game );
-	this.game.stage.resize(222, 125);
+
+	this.game.stage.resize( this.game.size.width, this.game.size.height );
 
 	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined" && typeof Cocoon.Utils.setAntialias !== "undefined") {
 		Cocoon.Utils.setAntialias(false);
@@ -29,14 +30,14 @@ SuperLumberjackSyrupChug.Intro.create = function () {
 	this.addChild(this.background);
 
 
-	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 5, 5);
+	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 5 * this.game.size.scale, 5 * this.game.size.scale);
 	this.title.x = Math.round(this.game.stage.width * 0.5 - this.title.width * 0.5);
 	this.title.animation.add('default', [0,1,2,3,4,5], 0.05, true, true);
 	this.addChild(this.title);
 
 
 	this.play = new Kiwi.GameObjects.Sprite(this, this.textures.play, Math.round(this.title.x), 0);
-	this.play.y = Math.round(this.game.stage.height - this.play.height) - 5;
+	this.play.y = Math.round(this.game.stage.height - this.play.height) - 5 * this.game.size.scale;
 	this.play.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.addChild(this.play);
 

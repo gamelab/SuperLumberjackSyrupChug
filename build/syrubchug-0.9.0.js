@@ -170,8 +170,11 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 
 	// Create graphics and add to state
 	this.characterNumber = character;
-	this.character = new SuperLumberjackSyrupChug.PlayerModel( this.state, 1, 15, character);
+	this.character = new SuperLumberjackSyrupChug.PlayerModel( this.state, 
+		1 * this.game.size.scale, 
+		15* this.game.size.scale, character);
 	this.addChild( this.character );
+
 
 	//Sounds
 	this.chockingSound = new  Kiwi.Sound.Audio(this.game, 'outOfBreath', 1, false);
@@ -182,14 +185,20 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 
 	// Nice temp primitive bars
 
-    this.bar = new Kiwi.GameObjects.StaticImage(state, state.textures['progress-bar'], 5, 5);
+    this.bar = new Kiwi.GameObjects.StaticImage(state, state.textures['progress-bar'], 
+    	5 * this.game.size.scale, 
+    	5 * this.game.size.scale);
     this.addChild(this.bar);
 
-    this.syrupLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['syrup-level'], 6, 6);
+    this.syrupLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['syrup-level'], 
+    	6 * this.game.size.scale,
+    	6 * this.game.size.scale);
     this.syrupLevel.anchorPointX = 0;
     this.addChild(this.syrupLevel);
 
-    this.oxygenLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['oxygen-level'], 6, 6 + this.syrupLevel.height);
+    this.oxygenLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['oxygen-level'], 
+    	6 * this.game.size.scale, 
+    	6 * this.game.size.scale + this.syrupLevel.height);
     this.oxygenLevel.anchorPointX = 0;
     this.addChild(this.oxygenLevel);
 
@@ -383,6 +392,97 @@ SuperLumberjackSyrupChug.PlayerModel = function(state, x, y, choice) {
 Kiwi.extend( SuperLumberjackSyrupChug.PlayerModel, Kiwi.GameObjects.Sprite );
 var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
+SuperLumberjackSyrupChug.SizeManager = function( game ) {
+
+	this.game = game;
+
+	this.gameSizes = [
+		{
+			x: 222,
+			y: 125,
+			scale: 1
+		},
+		{
+			x: 444,
+			y: 250,
+			scale: 2
+		},
+		{
+			x: 888,
+			y: 500,
+			scale: 4
+		}
+	];
+
+	//Choose the largest size 
+	this.choosenSize = this.gameSizes[2];
+
+	//Detect the windows width/height and choose the right size.
+	var len = this.gameSizes.length;
+	while(len--) {
+
+		//If the width and height of the current size is still larger than the windows.
+		//The choose that size.
+		if( window.innerHeight < this.gameSizes[len].y && window.innerWidth < this.gameSizes[len].x ) {
+			this.choosenSize = this.gameSizes[len];
+		}
+
+	}
+
+};
+
+Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "width", {
+    
+    get: function () {
+        return this.choosenSize.x;
+    },
+    
+    enumerable: true,
+    
+    configurable: true
+
+});
+
+Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "height", {
+    
+    get: function () {
+        return this.choosenSize.y;
+    },
+    
+    enumerable: true,
+    
+    configurable: true
+
+});
+
+
+Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "scale", {
+    
+    get: function () {
+        return this.choosenSize.scale;
+    },
+    
+    enumerable: true,
+    
+    configurable: true
+
+});
+
+
+
+Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "folder", {
+    
+    get: function () {
+        return 'assets/img/' + this.choosenSize.x + 'x' + this.choosenSize.y + '/';
+    },
+    
+    enumerable: true,
+    
+    configurable: true
+
+});
+var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
+
 SuperLumberjackSyrupChug.Tournament = function( game ) {
 
 	this.game = game;
@@ -534,7 +634,7 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 			break;
 	}
 
-	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45);
+	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45 * this.game.size.scale);
 	this.victorSprite.x = Math.round((this.game.stage.width - this.victorSprite.width) * 0.5);
 
 	var cellNum = texture.cells.length;
@@ -557,12 +657,12 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 SuperLumberjackSyrupChug.GameOver.configWin = function() {
 
 	// "You Won" logo
-	this.youWon = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-won"], 19, 6);
+	this.youWon = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-won"], 19 * this.game.size.scale, 6 * this.game.size.scale);
 	this.youWon.animation.add('default', [0,1], 0.05, true, true);
 	this.addChild(this.youWon);
 
 	// "Next Round" button
-	this.nextRound = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-next-round"], 44, 103);
+	this.nextRound = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-next-round"], 44 * this.game.size.scale, 103 * this.game.size.scale);
 	this.nextRound.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.nextRound);
 
@@ -582,12 +682,12 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 SuperLumberjackSyrupChug.GameOver.configLose = function() {
 
 	// "You Lost" logo
-	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 20, 5);
+	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 20 * this.game.size.scale, 5 * this.game.size.scale);
 	this.youLost.animation.add('default', [0,1], 0.05, true, true);
 	this.addChild(this.youLost);
 
 	// "Try Again" button
-	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 103);
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 103 * this.game.size.scale);
 	this.tryAgain.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.tryAgain);
 
@@ -606,13 +706,13 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 	// Congrats
-	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2);
+	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2 * this.game.size.scale);
 	this.congrats.x = Math.round((this.game.stage.width - this.congrats.width) * 0.5);
 	this.congrats.animation.add('default', [1,0], 0.075, true, true);
 	this.addChild( this.congrats );
 
 	// Subtext 
-	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17);
+	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17 * this.game.size.scale);
 	this.subtext.x = Math.round((this.game.stage.width - this.subtext.width) * 0.5);
 	this.addChild( this.subtext );
 
@@ -622,7 +722,7 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 	var x = 11;
 
 	for(var i = 0; i < 8; i++) {
-		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36);
+		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36 * this.game.size.scale);
 		jug.x = Math.round(x);
 		x += jug.width + 1;
 		this.addChild( jug );
@@ -642,12 +742,12 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 
 	// Champion Text
-	this.champion = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-champion'], 0, 56);
+	this.champion = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-champion'], 0, 56 * this.game.size.scale);
 	this.champion.x = (this.game.stage.width - this.champion.width) * 0.5 - 1;
 	this.addChild(this.champion);
 
 
-	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 98);
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 98 * this.game.size.scale);
 	this.addChild(this.tryAgain);
 
 	this.showTweet(true, false);
@@ -767,7 +867,8 @@ SuperLumberjackSyrupChug.Intro.init = function() {
 	this.game.audioMan = new SuperLumberjackSyrupChug.Audio( this.game );
     this.game.tournament = new SuperLumberjackSyrupChug.Tournament( this.game );
     this.game.background = new SuperLumberjackSyrupChug.Background( this.game );
-	this.game.stage.resize(222, 125);
+
+	this.game.stage.resize( this.game.size.width, this.game.size.height );
 
 	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined" && typeof Cocoon.Utils.setAntialias !== "undefined") {
 		Cocoon.Utils.setAntialias(false);
@@ -785,14 +886,14 @@ SuperLumberjackSyrupChug.Intro.create = function () {
 	this.addChild(this.background);
 
 
-	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 5, 5);
+	this.title = new Kiwi.GameObjects.Sprite(this, this.textures.title, 5 * this.game.size.scale, 5 * this.game.size.scale);
 	this.title.x = Math.round(this.game.stage.width * 0.5 - this.title.width * 0.5);
 	this.title.animation.add('default', [0,1,2,3,4,5], 0.05, true, true);
 	this.addChild(this.title);
 
 
 	this.play = new Kiwi.GameObjects.Sprite(this, this.textures.play, Math.round(this.title.x), 0);
-	this.play.y = Math.round(this.game.stage.height - this.play.height) - 5;
+	this.play.y = Math.round(this.game.stage.height - this.play.height) - 5 * this.game.size.scale;
 	this.play.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.addChild(this.play);
 
@@ -854,84 +955,114 @@ SuperLumberjackSyrupChug.Loading = new KiwiLoadingScreen('Loading', 'Splash', 'a
 
 SuperLumberjackSyrupChug.Loading.preload = function () {
 
-
     //Make sure to call the super at the top.
     //Otherwise the loading graphics will load last, and that defies the whole point in loading them. 
     KiwiLoadingScreen.prototype.preload.call(this);
 
     //Splash Screen
-    this.addImage('burns', 'assets/img/splash/burns.png'); //Tag this file...
+    this.addImage('burns', 'assets/img/splash/burns.png');
 
     //Background
-    this.addImage('morning-trees', 'assets/img/background/morning.png');
-    this.addImage('noon-trees', 'assets/img/background/noon.png');
-    this.addImage('night-trees', 'assets/img/background/night.png');
+    this.addImage('morning-trees', this.game.size.folder + 'background/morning.png');
+    this.addImage('noon-trees', this.game.size.folder + 'background/noon.png');
+    this.addImage('night-trees', this.game.size.folder + 'background/night.png');
     
     //Main Menu
-    this.addSpriteSheet('title', 'assets/img/main-menu/title.png', 149, 540 / 6);
-    this.addSpriteSheet('play', 'assets/img/main-menu/play-button.png', 73, 80 / 4);
-    this.addSpriteSheet('play-text', 'assets/img/main-menu/play-button-text.png', 73, 40 / 2);
+    this.addSpriteSheet('title', this.game.size.folder + 'main-menu/title.png', 
+        149 * this.game.size.scale, (540  * this.game.size.scale) / 6);
+    this.addSpriteSheet('play', this.game.size.folder + 'main-menu/play-button.png', 
+        73 * this.game.size.scale, (80  * this.game.size.scale) / 4);
+    this.addSpriteSheet('play-text', this.game.size.folder + 'main-menu/play-button-text.png', 
+        73 * this.game.size.scale, (40 * this.game.size.scale) / 2);
 
     //Additional Buttons
-    this.addSpriteSheet('leaderboard', 'assets/img/main-menu/leaderboard.png', 44 / 2, 20);
-    this.addSpriteSheet('sound', 'assets/img/main-menu/sound.png', 44 / 2, 20);
+    this.addSpriteSheet('leaderboard', this.game.size.folder + 'main-menu/leaderboard.png', 
+        (44 * this.game.size.scale) / 2, 20 * this.game.size.scale);
+    this.addSpriteSheet('sound', this.game.size.folder + 'main-menu/sound.png', 
+        (44 * this.game.size.scale) / 2, 20 * this.game.size.scale);
 
 
     //Characters Select
-    this.addSpriteSheet('select-paul', 'assets/img/character-select/paul.png', 172 / 4, 102 / 2);
-    this.addSpriteSheet('select-gustave', 'assets/img/character-select/gustave.png', 258 / 6, 102 / 2);
-    this.addSpriteSheet('select-bjorn', 'assets/img/character-select/bjorn.png', 258 / 6, 102 / 2);
-    this.addSpriteSheet('select-fried', 'assets/img/character-select/friedrich.png', 258 / 6, 102 / 2);
-    this.addSpriteSheet('select-big-jim', 'assets/img/character-select/bigjim.png', 172 / 4, 102 / 2);
-    this.addSpriteSheet('select-luther', 'assets/img/character-select/luther.png', 258 / 6, 102 / 2);
-    this.addSpriteSheet('select-pierre', 'assets/img/character-select/pierre.png', 258 / 6, 102 / 2);
-    this.addSpriteSheet('select-magnus', 'assets/img/character-select/magnus.png', 172 / 4, 102 / 2);
+    this.addSpriteSheet('select-paul', this.game.size.folder + 'character-select/paul.png', 
+        (172 * this.game.size.scale) / 4, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-gustave', this.game.size.folder + 'character-select/gustave.png', 
+        (258 * this.game.size.scale) / 6, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-bjorn', this.game.size.folder + 'character-select/bjorn.png', 
+        (258 * this.game.size.scale) / 6, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-fried', this.game.size.folder + 'character-select/friedrich.png', 
+        (258 * this.game.size.scale) / 6, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-big-jim', this.game.size.folder + 'character-select/bigjim.png', 
+        (172 * this.game.size.scale) / 4, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-luther', this.game.size.folder + 'character-select/luther.png', 
+        (258 * this.game.size.scale) / 6, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-pierre', this.game.size.folder + 'character-select/pierre.png', 
+        (258 * this.game.size.scale) / 6, (102 * this.game.size.scale) / 2);
+    this.addSpriteSheet('select-magnus', this.game.size.folder + 'character-select/magnus.png', 
+        (172 * this.game.size.scale) / 4, (102 * this.game.size.scale) / 2);
 
 
     //Select Screen Button
-    this.addSpriteSheet('select', 'assets/img/character-select/select-your-lumberjack.png', 173, 64 / 8);
-    this.addSpriteSheet('continue', 'assets/img/character-select/continue.png', 69, 32 / 4);
+    this.addSpriteSheet('select', this.game.size.folder + 'character-select/select-your-lumberjack.png', 
+        (173 * this.game.size.scale), (64 * this.game.size.scale) / 8);
+    this.addSpriteSheet('continue', this.game.size.folder + 'character-select/continue.png', 
+        (69 * this.game.size.scale), (32 * this.game.size.scale) / 4);
 
 
     // Game Over Assets
-    this.addSpriteSheet( 'gameover-next-round', 'assets/img/gameover/NEXT_ROUND.png', 130, 42 / 2);
-    this.addImage( 'gameover-quit', 'assets/img/gameover/QUIT.png' );
-    this.addSpriteSheet( 'gameover-try-again', 'assets/img/gameover/TRY_AGAIN.png', 130, 42 / 2);
-    this.addImage( 'gameover-tweet', 'assets/img/gameover/TWEET.png' );
-    this.addSpriteSheet( 'gameover-you-lost', 'assets/img/gameover/YOU_LOST.png', 176, 56 / 2);
-    this.addSpriteSheet( 'gameover-you-won', 'assets/img/gameover/YOU_WON.png', 176, 56 / 2);
+    this.addSpriteSheet( 'gameover-next-round', this.game.size.folder + 'gameover/NEXT_ROUND.png', 
+        (130 * this.game.size.scale), (42 * this.game.size.scale) / 2);
+    this.addImage( 'gameover-quit', this.game.size.folder + 'gameover/QUIT.png' );
+    this.addSpriteSheet( 'gameover-try-again', this.game.size.folder + 'gameover/TRY_AGAIN.png', 
+        (130 * this.game.size.scale), (42 * this.game.size.scale) / 2);
+    this.addImage( 'gameover-tweet', this.game.size.folder + 'gameover/TWEET.png' );
+    this.addSpriteSheet( 'gameover-you-lost', this.game.size.folder + 'gameover/YOU_LOST.png', 
+        176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
+    this.addSpriteSheet( 'gameover-you-won', this.game.size.folder + 'gameover/YOU_WON.png', 
+        176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
 
 
     //Champ assets here...
-    this.addSpriteSheet('gameover-congratulations', 'assets/img/champ/congrats.png', 211, 26 / 2);
-    this.addSpriteSheet('gameover-jug', 'assets/img/champ/jugs.png', 48 / 2, 40);
-    this.addImage('gameover-champion', 'assets/img/champ/champion.png');
-    this.addImage('gameover-subtext', 'assets/img/champ/subtext.png');
+    this.addSpriteSheet('gameover-congratulations', this.game.size.folder + 'champ/congrats.png', 
+        (211 * this.game.size.scale), (26 * this.game.size.scale) / 2);
+    this.addSpriteSheet('gameover-jug', this.game.size.folder + 'champ/jugs.png', 
+        (48 * this.game.size.scale) / 2, 40 * this.game.size.scale);
+    this.addImage('gameover-champion', this.game.size.folder + 'champ/champion.png');
+    this.addImage('gameover-subtext', this.game.size.folder + 'champ/subtext.png');
 
 
     //In Game 
-    this.addImage('chug', 'assets/img/in-game/chug.png');
-    this.addImage('ready', 'assets/img/in-game/ready.png');
-    this.addImage('tap-to-chug', 'assets/img/in-game/tap-to-chug.png');
-    this.addSpriteSheet('numbers', 'assets/img/in-game/numbers.png', 120 / 10, 13);
+    this.addImage('chug', this.game.size.folder + 'in-game/chug.png');
+    this.addImage('ready', this.game.size.folder + 'in-game/ready.png');
+    this.addImage('tap-to-chug', this.game.size.folder + 'in-game/tap-to-chug.png');
+    this.addSpriteSheet('numbers', this.game.size.folder + 'in-game/numbers.png', 
+        (120 * this.game.size.scale) / 10, 13 * this.game.size.scale);
 
 
     //Progress Bar
-    this.addImage('syrup-level', 'assets/img/in-game/syrup-level.png');
-    this.addImage('oxygen-level', 'assets/img/in-game/oxygen-level.png');
-    this.addImage('progress-bar', 'assets/img/in-game/progress-bar.png');
-    this.addSpriteSheet('pause-button', 'assets/img/in-game/pause-button.png', 23, 42 / 2);
+    this.addImage('syrup-level', this.game.size.folder + 'in-game/syrup-level.png');
+    this.addImage('oxygen-level', this.game.size.folder + 'in-game/oxygen-level.png');
+    this.addImage('progress-bar', this.game.size.folder + 'in-game/progress-bar.png');
+    this.addSpriteSheet('pause-button', this.game.size.folder + 'in-game/pause-button.png', 
+        23 * this.game.size.scale, (42 * this.game.size.scale) / 2);
 
 
     //In Game Characters
-    this.addSpriteSheet('ingame-paul', 'assets/img/in-game/chars/paul.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-gustave', 'assets/img/in-game/chars/gustave.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-bjorn', 'assets/img/in-game/chars/bjorn.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-fried', 'assets/img/in-game/chars/friedrich.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-big-jim', 'assets/img/in-game/chars/bigjim.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-luther', 'assets/img/in-game/chars/luther.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-pierre', 'assets/img/in-game/chars/pierre.png', 188 / 2, 321 / 3);
-    this.addSpriteSheet('ingame-magnus', 'assets/img/in-game/chars/magnus.png', 188 / 2, 321 / 3);
+    this.addSpriteSheet('ingame-paul', this.game.size.folder + 'in-game/chars/paul.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-gustave', this.game.size.folder + 'in-game/chars/gustave.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-bjorn', this.game.size.folder + 'in-game/chars/bjorn.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-fried', this.game.size.folder + 'in-game/chars/friedrich.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-big-jim', this.game.size.folder + 'in-game/chars/bigjim.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-luther', this.game.size.folder + 'in-game/chars/luther.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-pierre', this.game.size.folder + 'in-game/chars/pierre.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
+    this.addSpriteSheet('ingame-magnus', this.game.size.folder + 'in-game/chars/magnus.png', 
+        (188 * this.game.size.scale) / 2, (321 * this.game.size.scale) / 3);
 
 
 
@@ -1030,7 +1161,7 @@ SuperLumberjackSyrupChug.Play.create = function () {
 
   // Create hud elements
 
-  this.tapToChug = new Kiwi.GameObjects.StaticImage(this, this.textures['tap-to-chug'], 0, 93);
+  this.tapToChug = new Kiwi.GameObjects.StaticImage(this, this.textures['tap-to-chug'], 0 * this.game.size.scale, 93 * this.game.size.scale);
   this.tapToChug.x = (this.game.stage.width - this.tapToChug.width) * 0.5 + 1;
 
   this.game.audioMan.stopBackgroundTrack();
@@ -1039,13 +1170,13 @@ SuperLumberjackSyrupChug.Play.create = function () {
 
 SuperLumberjackSyrupChug.Play.countDown = function() {
   
-  this.ready = new Kiwi.GameObjects.StaticImage(this, this.textures['ready'], 0, 40);
+  this.ready = new Kiwi.GameObjects.StaticImage(this, this.textures['ready'], 0, 40 * this.game.size.scale);
   this.ready.x = (this.game.stage.width - this.ready.width) * 0.5;
   this.ready.transform.scale = 1.25;
   this.ready.alpha = 1;
   this.addChild(this.ready);
 
-  this.chug = new Kiwi.GameObjects.StaticImage(this, this.textures['chug'], 0, 40);
+  this.chug = new Kiwi.GameObjects.StaticImage(this, this.textures['chug'], 0, 40 * this.game.size.scale);
   this.chug.x = (this.game.stage.width - this.chug.width) * 0.5;
   this.chug.transform.scale = 1.25;
   this.chug.alpha = 1;
@@ -1161,12 +1292,12 @@ SuperLumberjackSyrupChug.Select.create = function () {
 	this.game.audioMan.playSelectTrack();
 
 	//Choose
-	this.select = new Kiwi.GameObjects.Sprite(this, this.textures.select, 0, 5);
+	this.select = new Kiwi.GameObjects.Sprite(this, this.textures.select, 0, 5 * this.game.size.scale);
 	this.select.x = ( this.game.stage.width - this.select.width ) * 0.5;
 	this.select.animation.add('default', [0,1,2,3,4,5,6,7], 0.05, true, true);
 	this.addChild( this.select );
 
-	this.continue = new Kiwi.GameObjects.Sprite(this, this.textures.continue, 0, 5);
+	this.continue = new Kiwi.GameObjects.Sprite(this, this.textures.continue, 0, 5 * this.game.size.scale);
 	this.continue.x = ( this.game.stage.width - this.continue.width ) * 0.5;
 	this.continue.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.continue.visible = false;
@@ -1181,14 +1312,14 @@ SuperLumberjackSyrupChug.Select.create = function () {
 
 SuperLumberjackSyrupChug.Select.spawnCharacters = function() {
 
-	var firstHeight = this.select.y + this.select.height + 5;
+	var firstHeight = this.select.y + this.select.height + 5 * this.game.size.scale;
 
-	this.paul = this.createLumberjack( this.textures['select-paul'], 10, firstHeight, 1 );
-	this.gustave = this.createLumberjack( this.textures['select-gustave'], this.paul.x + this.paul.width + 10, firstHeight, 2 );
-	this.bjorn = this.createLumberjack( this.textures['select-bjorn'], this.gustave.x + this.gustave.width + 10, firstHeight, 3 );
-	this.fred = this.createLumberjack( this.textures['select-fried'], this.bjorn.x + this.bjorn.width + 10 , firstHeight, 4 );
+	this.paul = this.createLumberjack( this.textures['select-paul'], 10 * this.game.size.scale, firstHeight, 1 );
+	this.gustave = this.createLumberjack( this.textures['select-gustave'], this.paul.x + this.paul.width + 10 * this.game.size.scale, firstHeight, 2 );
+	this.bjorn = this.createLumberjack( this.textures['select-bjorn'], this.gustave.x + this.gustave.width + 10 * this.game.size.scale, firstHeight, 3 );
+	this.fred = this.createLumberjack( this.textures['select-fried'], this.bjorn.x + this.bjorn.width + 10 * this.game.size.scale , firstHeight, 4 );
 
-	var secondHeight = firstHeight + this.paul.height + 2;
+	var secondHeight = firstHeight + this.paul.height + 2 * this.game.size.scale;
 
 	this.bigJim = this.createLumberjack( this.textures['select-big-jim'], this.paul.x, secondHeight, 5 );
 	this.luther = this.createLumberjack( this.textures['select-luther'], this.gustave.x, secondHeight, 6 );
@@ -1324,6 +1455,9 @@ var gameOptions = {
 };
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOptions);
+
+//Add in the scale manager to calculate the dimensions the game will use.
+game.size = new SuperLumberjackSyrupChug.SizeManager( game ); 
 
 //Add all the States we are going to use.
 game.states.addState(SuperLumberjackSyrupChug.Loading);

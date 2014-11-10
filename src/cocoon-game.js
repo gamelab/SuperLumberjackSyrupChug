@@ -20,6 +20,9 @@ var gameOptions = {
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOptions);
 
+//Add in the scale manager to calculate the dimensions the game will use.
+game.size = new SuperLumberjackSyrupChug.SizeManager( game ); 
+
 //Add all the States we are going to use.
 game.states.addState(SuperLumberjackSyrupChug.Loading);
 game.states.addState(SuperLumberjackSyrupChug.Intro);

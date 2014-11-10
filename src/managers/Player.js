@@ -6,8 +6,11 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 
 	// Create graphics and add to state
 	this.characterNumber = character;
-	this.character = new SuperLumberjackSyrupChug.PlayerModel( this.state, 1, 15, character);
+	this.character = new SuperLumberjackSyrupChug.PlayerModel( this.state, 
+		1 * this.game.size.scale, 
+		15* this.game.size.scale, character);
 	this.addChild( this.character );
+
 
 	//Sounds
 	this.chockingSound = new  Kiwi.Sound.Audio(this.game, 'outOfBreath', 1, false);
@@ -18,14 +21,20 @@ SuperLumberjackSyrupChug.Player = function(state, character) {
 
 	// Nice temp primitive bars
 
-    this.bar = new Kiwi.GameObjects.StaticImage(state, state.textures['progress-bar'], 5, 5);
+    this.bar = new Kiwi.GameObjects.StaticImage(state, state.textures['progress-bar'], 
+    	5 * this.game.size.scale, 
+    	5 * this.game.size.scale);
     this.addChild(this.bar);
 
-    this.syrupLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['syrup-level'], 6, 6);
+    this.syrupLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['syrup-level'], 
+    	6 * this.game.size.scale,
+    	6 * this.game.size.scale);
     this.syrupLevel.anchorPointX = 0;
     this.addChild(this.syrupLevel);
 
-    this.oxygenLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['oxygen-level'], 6, 6 + this.syrupLevel.height);
+    this.oxygenLevel = new Kiwi.GameObjects.StaticImage(state, state.textures['oxygen-level'], 
+    	6 * this.game.size.scale, 
+    	6 * this.game.size.scale + this.syrupLevel.height);
     this.oxygenLevel.anchorPointX = 0;
     this.addChild(this.oxygenLevel);
 

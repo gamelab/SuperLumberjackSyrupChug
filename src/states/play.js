@@ -77,7 +77,7 @@ SuperLumberjackSyrupChug.Play.create = function () {
 
   // Create hud elements
 
-  this.tapToChug = new Kiwi.GameObjects.StaticImage(this, this.textures['tap-to-chug'], 0, 93);
+  this.tapToChug = new Kiwi.GameObjects.StaticImage(this, this.textures['tap-to-chug'], 0 * this.game.size.scale, 93 * this.game.size.scale);
   this.tapToChug.x = (this.game.stage.width - this.tapToChug.width) * 0.5 + 1;
 
   this.game.audioMan.stopBackgroundTrack();
@@ -86,13 +86,13 @@ SuperLumberjackSyrupChug.Play.create = function () {
 
 SuperLumberjackSyrupChug.Play.countDown = function() {
   
-  this.ready = new Kiwi.GameObjects.StaticImage(this, this.textures['ready'], 0, 40);
+  this.ready = new Kiwi.GameObjects.StaticImage(this, this.textures['ready'], 0, 40 * this.game.size.scale);
   this.ready.x = (this.game.stage.width - this.ready.width) * 0.5;
   this.ready.transform.scale = 1.25;
   this.ready.alpha = 1;
   this.addChild(this.ready);
 
-  this.chug = new Kiwi.GameObjects.StaticImage(this, this.textures['chug'], 0, 40);
+  this.chug = new Kiwi.GameObjects.StaticImage(this, this.textures['chug'], 0, 40 * this.game.size.scale);
   this.chug.x = (this.game.stage.width - this.chug.width) * 0.5;
   this.chug.transform.scale = 1.25;
   this.chug.alpha = 1;

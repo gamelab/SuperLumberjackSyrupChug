@@ -70,7 +70,7 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 			break;
 	}
 
-	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45);
+	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45 * this.game.size.scale);
 	this.victorSprite.x = Math.round((this.game.stage.width - this.victorSprite.width) * 0.5);
 
 	var cellNum = texture.cells.length;
@@ -93,12 +93,12 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 SuperLumberjackSyrupChug.GameOver.configWin = function() {
 
 	// "You Won" logo
-	this.youWon = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-won"], 19, 6);
+	this.youWon = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-won"], 19 * this.game.size.scale, 6 * this.game.size.scale);
 	this.youWon.animation.add('default', [0,1], 0.05, true, true);
 	this.addChild(this.youWon);
 
 	// "Next Round" button
-	this.nextRound = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-next-round"], 44, 103);
+	this.nextRound = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-next-round"], 44 * this.game.size.scale, 103 * this.game.size.scale);
 	this.nextRound.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.nextRound);
 
@@ -118,12 +118,12 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 SuperLumberjackSyrupChug.GameOver.configLose = function() {
 
 	// "You Lost" logo
-	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 20, 5);
+	this.youLost = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-you-lost"], 20 * this.game.size.scale, 5 * this.game.size.scale);
 	this.youLost.animation.add('default', [0,1], 0.05, true, true);
 	this.addChild(this.youLost);
 
 	// "Try Again" button
-	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 103);
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 103 * this.game.size.scale);
 	this.tryAgain.animation.add('default', [1,0], 0.05, true, true);
 	this.addChild(this.tryAgain);
 
@@ -142,13 +142,13 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 	// Congrats
-	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2);
+	this.congrats = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-congratulations'], 0, 2 * this.game.size.scale);
 	this.congrats.x = Math.round((this.game.stage.width - this.congrats.width) * 0.5);
 	this.congrats.animation.add('default', [1,0], 0.075, true, true);
 	this.addChild( this.congrats );
 
 	// Subtext 
-	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17);
+	this.subtext = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-subtext'], 0, 17 * this.game.size.scale);
 	this.subtext.x = Math.round((this.game.stage.width - this.subtext.width) * 0.5);
 	this.addChild( this.subtext );
 
@@ -158,7 +158,7 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 	var x = 11;
 
 	for(var i = 0; i < 8; i++) {
-		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36);
+		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36 * this.game.size.scale);
 		jug.x = Math.round(x);
 		x += jug.width + 1;
 		this.addChild( jug );
@@ -178,12 +178,12 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 
 
 	// Champion Text
-	this.champion = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-champion'], 0, 56);
+	this.champion = new Kiwi.GameObjects.StaticImage(this, this.textures['gameover-champion'], 0, 56 * this.game.size.scale);
 	this.champion.x = (this.game.stage.width - this.champion.width) * 0.5 - 1;
 	this.addChild(this.champion);
 
 
-	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44, 98);
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 98 * this.game.size.scale);
 	this.addChild(this.tryAgain);
 
 	this.showTweet(true, false);

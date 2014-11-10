@@ -10,12 +10,12 @@ SuperLumberjackSyrupChug.Select.create = function () {
 	this.game.audioMan.playSelectTrack();
 
 	//Choose
-	this.select = new Kiwi.GameObjects.Sprite(this, this.textures.select, 0, 5);
+	this.select = new Kiwi.GameObjects.Sprite(this, this.textures.select, 0, 5 * this.game.size.scale);
 	this.select.x = ( this.game.stage.width - this.select.width ) * 0.5;
 	this.select.animation.add('default', [0,1,2,3,4,5,6,7], 0.05, true, true);
 	this.addChild( this.select );
 
-	this.continue = new Kiwi.GameObjects.Sprite(this, this.textures.continue, 0, 5);
+	this.continue = new Kiwi.GameObjects.Sprite(this, this.textures.continue, 0, 5 * this.game.size.scale);
 	this.continue.x = ( this.game.stage.width - this.continue.width ) * 0.5;
 	this.continue.animation.add('default', [0,1,2,3], 0.05, true, true);
 	this.continue.visible = false;
@@ -30,14 +30,14 @@ SuperLumberjackSyrupChug.Select.create = function () {
 
 SuperLumberjackSyrupChug.Select.spawnCharacters = function() {
 
-	var firstHeight = this.select.y + this.select.height + 5;
+	var firstHeight = this.select.y + this.select.height + 5 * this.game.size.scale;
 
-	this.paul = this.createLumberjack( this.textures['select-paul'], 10, firstHeight, 1 );
-	this.gustave = this.createLumberjack( this.textures['select-gustave'], this.paul.x + this.paul.width + 10, firstHeight, 2 );
-	this.bjorn = this.createLumberjack( this.textures['select-bjorn'], this.gustave.x + this.gustave.width + 10, firstHeight, 3 );
-	this.fred = this.createLumberjack( this.textures['select-fried'], this.bjorn.x + this.bjorn.width + 10 , firstHeight, 4 );
+	this.paul = this.createLumberjack( this.textures['select-paul'], 10 * this.game.size.scale, firstHeight, 1 );
+	this.gustave = this.createLumberjack( this.textures['select-gustave'], this.paul.x + this.paul.width + 10 * this.game.size.scale, firstHeight, 2 );
+	this.bjorn = this.createLumberjack( this.textures['select-bjorn'], this.gustave.x + this.gustave.width + 10 * this.game.size.scale, firstHeight, 3 );
+	this.fred = this.createLumberjack( this.textures['select-fried'], this.bjorn.x + this.bjorn.width + 10 * this.game.size.scale , firstHeight, 4 );
 
-	var secondHeight = firstHeight + this.paul.height + 2;
+	var secondHeight = firstHeight + this.paul.height + 2 * this.game.size.scale;
 
 	this.bigJim = this.createLumberjack( this.textures['select-big-jim'], this.paul.x, secondHeight, 5 );
 	this.luther = this.createLumberjack( this.textures['select-luther'], this.gustave.x, secondHeight, 6 );
