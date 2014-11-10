@@ -631,6 +631,8 @@ SuperLumberjackSyrupChug.Facebook.playGame = function() {
 
 SuperLumberjackSyrupChug.Facebook.shutDown = function() {
 
+
+	this.game.input.onUp.remove( this.processInput, this);
 	this.game.fileStore.removeFile('fb-button');
 	this.game.fileStore.removeFile('no-thanks');
 
