@@ -59,8 +59,6 @@ SuperLumberjackSyrupChug.Play.create = function () {
     this.unpauseGame();
   }, this);
 
-  //Tell the tournament manager we want the next opponent
-  this.game.tournament.nextOpponent();
 
   // Create and connect player 1
   // This is the player sitting at this computer

@@ -69,6 +69,10 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
         176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
     this.addSpriteSheet( 'gameover-you-won', this.game.size.folder + 'gameover/YOU_WON.png', 
         176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
+    this.addSpriteSheet( 'next-up', this.game.size.folder + 'gameover/nextup.png', 
+        30 * this.game.size.scale, (10 * this.game.size.scale) / 2);
+    this.addSpriteSheet( 'so-sorry', this.game.size.folder + 'gameover/sosorry.png', 
+        30 * this.game.size.scale, (10 * this.game.size.scale) / 2);
 
 
     //Champ assets here...

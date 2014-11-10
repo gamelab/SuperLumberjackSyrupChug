@@ -590,6 +590,9 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 
 		} else {
 
+  			//Tell the tournament manager we want the next opponent
+			this.game.tournament.nextOpponent();
+
 			// You won; config victory screen
 			this.configWin();
 
@@ -601,10 +604,12 @@ SuperLumberjackSyrupChug.GameOver.create = function(enemyWon, winner, player1) {
 }
 
 
-SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
+SuperLumberjackSyrupChug.GameOver.displayChar = function( char, displayNextUp ) {
 	var lumberjackName = "";
 	var numFrames = 0;
-	switch( this.winner ) {
+	var texture = null;
+
+	switch( char ) {
 		case 1:
 			texture = this.textures["select-paul"];
 			break;
@@ -634,7 +639,7 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 			break;
 	}
 
-	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 45 * this.game.size.scale);
+	this.victorSprite = new Kiwi.GameObjects.Sprite( this, texture, 0, 46 * this.game.size.scale);
 	this.victorSprite.x = Math.round((this.game.stage.width - this.victorSprite.width) * 0.5);
 
 	var cellNum = texture.cells.length;
@@ -646,6 +651,25 @@ SuperLumberjackSyrupChug.GameOver.displayVictor = function() {
 
 	this.victorSprite.animation.add('animate', frames, 0.1, true, true, false );
 	this.addChild(this.victorSprite);
+
+	if( displayNextUp ) {
+		//Next Up
+		var texture = this.textures['next-up'];
+
+	} else {
+		//So sorry
+		var texture = this.textures['so-sorry'];
+
+	}
+
+	this.newText = new Kiwi.GameObjects.Sprite( this, texture );
+	this.newText.x = Math.round((this.game.stage.width - this.newText.width) * 0.5);
+	this.newText.y = this.victorSprite.y - this.newText.height - 2 * this.game.size.scale;
+	this.newText.animation.add('animate', [0,1], 0.1, true, true, false );
+
+	this.addChild(this.newText);
+
+
 }
 
 /**
@@ -675,7 +699,7 @@ SuperLumberjackSyrupChug.GameOver.configWin = function() {
 	}, 500);
 
 	this.game.audioMan.playWinnerTrack();
-	this.displayVictor();
+	this.displayChar( this.game.tournament.currentOpponent, true );
 }
 
 
@@ -700,7 +724,7 @@ SuperLumberjackSyrupChug.GameOver.configLose = function() {
 	}, 500);
 
 	this.game.audioMan.playLoserTrack();
-	this.displayVictor();
+	this.displayChar( this.game.tournament.player, false );
 }
 
 SuperLumberjackSyrupChug.GameOver.configChamp = function() {
@@ -771,7 +795,7 @@ SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
 	this.addChild(this.tweet);
 
 	if(centerY) {
-		this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 );
+		this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 ) + 5 * this.game.size.scale;
 	} else {
 		this.tweet.y = 76;
 	}
@@ -799,7 +823,7 @@ SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
 SuperLumberjackSyrupChug.GameOver.showQuit = function() {
 
 	this.quit = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-quit"], 0, 0);
-	this.quit.y = Math.floor( (this.game.stage.height - this.quit.height) / 2 );
+	this.quit.y = Math.floor( (this.game.stage.height - this.quit.height) / 2 ) + 5 * this.game.size.scale;
 	this.quit.x = Math.floor( this.quit.y * 0.3 );
 	
 	this.addChild(this.quit);
@@ -1019,6 +1043,10 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
         176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
     this.addSpriteSheet( 'gameover-you-won', this.game.size.folder + 'gameover/YOU_WON.png', 
         176 * this.game.size.scale, (56 * this.game.size.scale) / 2);
+    this.addSpriteSheet( 'next-up', this.game.size.folder + 'gameover/nextup.png', 
+        30 * this.game.size.scale, (10 * this.game.size.scale) / 2);
+    this.addSpriteSheet( 'so-sorry', this.game.size.folder + 'gameover/sosorry.png', 
+        30 * this.game.size.scale, (10 * this.game.size.scale) / 2);
 
 
     //Champ assets here...
@@ -1143,8 +1171,6 @@ SuperLumberjackSyrupChug.Play.create = function () {
     this.unpauseGame();
   }, this);
 
-  //Tell the tournament manager we want the next opponent
-  this.game.tournament.nextOpponent();
 
   // Create and connect player 1
   // This is the player sitting at this computer
@@ -1380,6 +1406,10 @@ SuperLumberjackSyrupChug.Select.selectCharacter = function(jack) {
 SuperLumberjackSyrupChug.Select.proceed = function() {
 
 	if(this.selectedLumberjack !== null && this.game.tournament.start( this.selectedLumberjack.id ) ) {
+
+	  	//Tell the tournament manager we want the next opponent
+	  	this.game.tournament.nextOpponent();
+
 		this.game.audioMan.playButton();
 		this.game.states.switchState('Play');
 	}

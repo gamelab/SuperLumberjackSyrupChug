@@ -98,6 +98,10 @@ SuperLumberjackSyrupChug.Select.selectCharacter = function(jack) {
 SuperLumberjackSyrupChug.Select.proceed = function() {
 
 	if(this.selectedLumberjack !== null && this.game.tournament.start( this.selectedLumberjack.id ) ) {
+
+	  	//Tell the tournament manager we want the next opponent
+	  	this.game.tournament.nextOpponent();
+
 		this.game.audioMan.playButton();
 		this.game.states.switchState('Play');
 	}
