@@ -2,24 +2,6 @@ var SuperLumberjackSyrupChug = SuperLumberjackSyrupChug || {};
 
 SuperLumberjackSyrupChug.Intro = new Kiwi.State('Intro');
 
-/**
-* The IntroState is the state which would manage any main-menu functionality for your game.
-* Generally this State would switch to other sub 'states' which would handle the individual features.
-*/
-
-SuperLumberjackSyrupChug.Intro.init = function() {
-	this.game.audioMan = new SuperLumberjackSyrupChug.Audio( this.game );
-    this.game.tournament = new SuperLumberjackSyrupChug.Tournament( this.game );
-    this.game.background = new SuperLumberjackSyrupChug.Background( this.game );
-
-	this.game.stage.resize( this.game.size.width, this.game.size.height );
-
-	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined" && typeof Cocoon.Utils.setAntialias !== "undefined") {
-		Cocoon.Utils.setAntialias(false);
-	}
-}
-
-
 SuperLumberjackSyrupChug.Intro.create = function () {
 
 	this.game.stage.color = '000000';

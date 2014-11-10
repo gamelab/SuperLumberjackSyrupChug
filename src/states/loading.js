@@ -12,6 +12,10 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     //Splash Screen
     this.addImage('burns', 'assets/img/splash/burns.png');
 
+    //Facebook
+    this.addImage('fb-button', this.game.size.folder+ 'facebook/FB-button.png');
+    this.addImage('no-thanks', this.game.size.folder+ 'facebook/nothanks.png');
+
     //Background
     this.addImage('morning-trees', this.game.size.folder + 'background/morning.png');
     this.addImage('noon-trees', this.game.size.folder + 'background/noon.png');

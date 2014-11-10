@@ -39,7 +39,7 @@ SuperLumberjackSyrupChug.Splash.switchBackgroundColor = function() {
 
 SuperLumberjackSyrupChug.Splash.play = function() {
 
-	this.game.states.switchState('Intro');
+	this.game.states.switchState('Facebook');
 
 };
 

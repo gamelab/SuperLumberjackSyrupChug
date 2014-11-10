@@ -15,7 +15,8 @@ var gameOptions = {
 	renderer: Kiwi.RENDERER_CANVAS,
 	scaleType: Kiwi.Stage.SCALE_FIT,
 	deviceTarget: Kiwi.TARGET_COCOON,
-	debug: Kiwi.DEBUG_OFF
+	debug: Kiwi.DEBUG_OFF,
+	plugins: ['SocialConnect']
 };
 
 var game = new Kiwi.Game('content', 'SuperLumberjackSyrupChug', null, gameOptions);
@@ -30,5 +31,6 @@ game.states.addState(SuperLumberjackSyrupChug.Select);
 game.states.addState(SuperLumberjackSyrupChug.Play);
 game.states.addState(SuperLumberjackSyrupChug.GameOver);
 game.states.addState(SuperLumberjackSyrupChug.Splash);
+game.states.addState(SuperLumberjackSyrupChug.Facebook);
 
 game.states.switchState("Loading");
