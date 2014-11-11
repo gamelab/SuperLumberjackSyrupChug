@@ -429,6 +429,8 @@ SuperLumberjackSyrupChug.SizeManager = function( game ) {
 
 	}
 
+	console.log('Size set to: ' + this.choosenSize.x + 'x' + this.choosenSize.y);
+
 };
 
 Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "width", {
@@ -579,8 +581,14 @@ SuperLumberjackSyrupChug.Facebook.init = function() {
 		appId: '299973880205978'
 	} );
 
-	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined" && typeof Cocoon.Utils.setAntialias !== "undefined") {
-		Cocoon.Utils.setAntialias(false);
+	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined") {
+		if( typeof Cocoon.Utils.setAntialias !== "undefined") {
+			Cocoon.Utils.setAntialias(false);
+		}
+
+		if( typeof Cocoon.Utils.setNPOTEnabled !== "undefined") {
+			Cocoon.Utils.setNPOTEnabled(true);
+		}
 	}
 
 };
@@ -1054,7 +1062,7 @@ SuperLumberjackSyrupChug.Loading.preload = function () {
     
     //Main Menu
     this.addSpriteSheet('title', this.game.size.folder + 'main-menu/title.png', 
-        149 * this.game.size.scale, (540  * this.game.size.scale) / 6);
+        149 * this.game.size.scale, 90  * this.game.size.scale);
     this.addSpriteSheet('play', this.game.size.folder + 'main-menu/play-button.png', 
         73 * this.game.size.scale, (80  * this.game.size.scale) / 4);
     this.addSpriteSheet('play-text', this.game.size.folder + 'main-menu/play-button-text.png', 

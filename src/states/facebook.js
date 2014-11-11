@@ -15,8 +15,14 @@ SuperLumberjackSyrupChug.Facebook.init = function() {
 		appId: '299973880205978'
 	} );
 
-	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined" && typeof Cocoon.Utils.setAntialias !== "undefined") {
-		Cocoon.Utils.setAntialias(false);
+	if(typeof Cocoon !== "undefined" && typeof Cocoon.Utils !== "undefined") {
+		if( typeof Cocoon.Utils.setAntialias !== "undefined") {
+			Cocoon.Utils.setAntialias(false);
+		}
+
+		if( typeof Cocoon.Utils.setNPOTEnabled !== "undefined") {
+			Cocoon.Utils.setNPOTEnabled(true);
+		}
 	}
 
 };

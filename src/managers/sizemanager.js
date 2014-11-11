@@ -37,6 +37,8 @@ SuperLumberjackSyrupChug.SizeManager = function( game ) {
 
 	}
 
+	console.log('Size set to: ' + this.choosenSize.x + 'x' + this.choosenSize.y);
+
 };
 
 Object.defineProperty( SuperLumberjackSyrupChug.SizeManager.prototype, "width", {
