@@ -179,12 +179,12 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 	//Create Jugs
 	this.jugs = [];
 	this.currentJug = 0;
-	var x = 11;
+	var x = 11 * this.game.size.scale;
 
 	for(var i = 0; i < 8; i++) {
 		var jug = new Kiwi.GameObjects.Sprite(this, this.textures['gameover-jug'], 0, 36 * this.game.size.scale);
 		jug.x = Math.round(x);
-		x += jug.width + 1;
+		x += jug.width + 1 * this.game.size.scale;
 		this.addChild( jug );
 		this.jugs.push( jug );
 
@@ -207,7 +207,7 @@ SuperLumberjackSyrupChug.GameOver.configChamp = function() {
 	this.addChild(this.champion);
 
 
-	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 98 * this.game.size.scale);
+	this.tryAgain = new Kiwi.GameObjects.Sprite(this, this.textures["gameover-try-again"], 44 * this.game.size.scale, 99 * this.game.size.scale);
 	this.addChild(this.tryAgain);
 
 	this.showTweet(true, false);
@@ -233,7 +233,7 @@ SuperLumberjackSyrupChug.GameOver.showTweet = function( centerX, centerY ) {
 	if(centerY) {
 		this.tweet.y = Math.floor( (this.game.stage.height - this.tweet.height) / 2 ) + 5 * this.game.size.scale;
 	} else {
-		this.tweet.y = 76;
+		this.tweet.y = Math.floor( this.game.stage.height - (this.tweet.height * 2) ) - 7 * this.game.size.scale;
 	}
 
 	if(centerX) {

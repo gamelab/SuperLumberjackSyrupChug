@@ -9,8 +9,8 @@ SuperLumberjackSyrupChug.Audio = function(game) {
 	this.titleTrack = new Kiwi.Sound.Audio(this.game, 'title-loop', 0.8, true);
 	this.selectTrack = new Kiwi.Sound.Audio(this.game, 'select-loop', 0.8, true);
 	this.gameTrack = new Kiwi.Sound.Audio(this.game, 'game-loop', 0.6, true);
-	this.loserTrack = new Kiwi.Sound.Audio(this.game, 'loser', 0.8, true);
-	this.winnerTrack = new Kiwi.Sound.Audio(this.game, 'winner', 0.8, true);
+	this.loserTrack = new Kiwi.Sound.Audio(this.game, 'loser', 0.8, false);
+	this.winnerTrack = new Kiwi.Sound.Audio(this.game, 'winner', 0.8, false);
 	this.finalTrack = new Kiwi.Sound.Audio(this.game, 'final-loop', 0.8, true);
 
 	this.button = new Kiwi.Sound.Audio(this.game, 'button', 0.8, false);
